@@ -12,9 +12,9 @@ class AuthService {
                 if (response.data.authenticationToken) {
                     localStorage.setItem("user", JSON.stringify(response.data));
                     if (response.data.role.includes("ROLE_ADMIN")) {
-                        window.location.assign("http://localhost:3000/admin/profile");
+                        window.location.href = "/admin/profile";
                     } else {
-                        window.location.assign("http://localhost:3000/profile");
+                        window.location.href = "/profile";
                     }
                 }
                 return response.data;
@@ -23,7 +23,7 @@ class AuthService {
 
     logout() {
         localStorage.removeItem("user");
-        window.location.assign("http://localhost:3000/auth");
+        window.location.href = "/auth";
     }
 
     register(firstName, lastName, middleName, email, username, password) {
