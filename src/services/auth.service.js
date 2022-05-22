@@ -34,6 +34,9 @@ class AuthService {
             email,
             username,
             password
+        }).then(response => {
+            window.location.assign("http://localhost:3000/auth");
+            return response.data;
         });
     }
 
