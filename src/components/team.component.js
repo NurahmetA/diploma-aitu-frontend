@@ -1,5 +1,6 @@
 import {Component} from "react";
 import AdminService from "../services/admin.service";
+import {Link} from "react-router-dom";
 
 export default class Team extends Component {
     constructor(props) {
@@ -143,7 +144,9 @@ export default class Team extends Component {
                         {this.getListDefences()}
                         <div className="row">
                             <div className="col-sm-12">
-                                <a className="btn btn-info " target="__blank">Set Defence</a>
+                                <Link className = "btn btn-info" to={"/admin/team/defence/" + this.state.team.id}>
+                                    Set Defence
+                                </Link>
                             </div>
                         </div>
                     </div>

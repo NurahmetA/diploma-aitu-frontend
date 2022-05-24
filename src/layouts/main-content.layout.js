@@ -5,6 +5,7 @@ import ProfilePage from "../pages/common/profile.page";
 import CommissionDashboardPage from "../pages/commission-pages/dashboard.page";
 import AdminProfilePage from "../pages/admin-pages/admin-profile.page";
 import Team from "../components/team.component";
+import TeamDefence from "../components/team-defence-component";
 import CommissionDefencePage from "../pages/commission-pages/defence.page";
 import CommissionDocumentsPage from "../pages/commission-pages/documents.page";
 
@@ -20,6 +21,8 @@ function MainContentLayout(props) {
                 <Route path="/commission/documents" element={<CommissionDocumentsPage/>}/>
                 <Route path="/admin/profile" element={<AdminProfilePage/>}/>
                 <Route path="/admin/team/:id" element={<Team/>}/>
+                <Route path="/admin/team/defence/:id" element={<TeamDefence/>}/>
+                {/*<Route path="/admin/team/defence/:id/success" element={<TeamDefence/>}/>*/}
             </Routes>
         </div>
     );
