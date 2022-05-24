@@ -39,7 +39,7 @@ function SidebarLayout(props) {
                             <Link to="/commission/defence" className="nav-a">Defence</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/commission/team" className="nav-a">Documents</Link>
+                            <Link to="/commission/documents" className="nav-a">Documents</Link>
                         </li>
                     </div>
                 }

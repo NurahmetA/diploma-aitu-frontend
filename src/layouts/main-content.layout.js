@@ -6,6 +6,7 @@ import CommissionDashboardPage from "../pages/commission-pages/dashboard.page";
 import AdminProfilePage from "../pages/admin-pages/admin-profile.page";
 import Team from "../components/team.component";
 import CommissionDefencePage from "../pages/commission-pages/defence.page";
+import CommissionDocumentsPage from "../pages/commission-pages/documents.page";
 
 function MainContentLayout(props) {
     return (
@@ -16,6 +17,7 @@ function MainContentLayout(props) {
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/commission/dashboard" element={<CommissionDashboardPage/>}/>
                 <Route path="/commission/defence/:id" element={<CommissionDefencePage/>}/>
+                <Route path="/commission/documents" element={<CommissionDocumentsPage/>}/>
                 <Route path="/admin/profile" element={<AdminProfilePage/>}/>
                 <Route path="/admin/team/:id" element={<Team/>}/>
             </Routes>
