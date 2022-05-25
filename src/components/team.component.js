@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 export default class Team extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             team: {team: ""},
             creator: {creator: ""},
@@ -144,7 +143,9 @@ export default class Team extends Component {
                         {this.getListDefences()}
                         <div className="row">
                             <div className="col-sm-12">
-                                <Link className = "btn btn-info" to={"/admin/team/defence/" + this.state.team.id}>
+                                <Link className="btn btn-info" to={{
+                                    pathname: "/admin/team/defence/" + this.state.team.id,
+                                }}>
                                     Set Defence
                                 </Link>
                             </div>

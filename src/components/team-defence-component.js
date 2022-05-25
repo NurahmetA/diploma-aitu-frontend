@@ -5,69 +5,28 @@ import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import AdminService from "../services/admin.service";
 import DatepickerComponent from "./common/datepicker.component";
+import {useLocation} from 'react-router-dom';
+import adminService from "../services/admin.service";
 
 
-
-export default class Defence extends Component {
-    commissionNames = []
-    stageNames = []
+export default class TeamDefence extends Component {
 
     constructor(props) {
         super(props);
-
-
         this.state = {
-            teamId: "",
-            commission: [],
+            teamId: window.location.pathname.substring(20),
+            commissionArray: [],
             defence: {defence: ""},
-            selected: [],
+            commission: [],
             stages: [],
-            selectedDate: "2015-04-14",
-            selectedStage: null
-        };
-
-        AdminService.getStage()
-            .then(response => {
-                response.data.map( item => {
-                    this.stageNames.push({
-                        label: item.name,
-                        value: item + 1,
-                        elIndex: item.id
-                    })
-
-                })
-
-
-
-                this.setState({
-                        stages: this.stageNames
-                    }
-                )
-            })
-
-        AdminService.getCommission()
-            .then(response => {
-                response.data.map( item => {
-                    this.commissionNames.push({
-                        label: "" + item.first_name + " " + item.last_name,
-                        value: item.id,
-                        elIndex: item.id
-                    })
-                })
-
-
-
-                this.setState({
-                        commission: this.commissionNames
-                    }
-                )
-            })
-
+            selectedDate: "2001-01-01",
+            stageId: null
+        }
     }
 
-    handleChange = (selectedStage) => {
-        this.setState({selectedStage}, () =>
-            console.log(`Option selected:`, this.state.selectedStage)
+    handleChange = (stageId) => {
+        this.setState({stageId}, () =>
+            console.log(`Option selected:`, this.state.stageId)
         );
     };
 
@@ -76,55 +35,93 @@ export default class Defence extends Component {
             selectedDate: event.target.value
         }, () =>
             console.log(`Date selected:`, this.state.selectedDate))
+        console.log(`Date type:`, typeof this.state.selectedDate)
+        console.warn("com" + this.state.commission)
+        console.log("stage" + this.state.stageId.elIndex)
+    }
+
+    setDefence = (e) => {
+        e.preventDefault()
+        adminService.setDefenceDate(this.state.teamId, this.state.selectedDate, this.state.commission, this.state.stageId.elIndex)
+            .then(response => {
+                console.log(response.data)
+            })
     }
 
 
     componentDidMount() {
+        const commissionNames = []
+        const stageNames = []
 
+        AdminService.getStage()
+            .then(response => {
+                response.data.map(item => {
+                    stageNames.push({
+                        label: item.name,
+                        value: item.id + 1,
+                        elIndex: item.id
+                    })
+
+                })
+                this.setState({
+                        stages: stageNames
+                    }
+                )
+            })
+
+        AdminService.getCommission()
+            .then(response => {
+                response.data.map(item => {
+                    commissionNames.push({
+                        label: "" + item.first_name + " " + item.last_name,
+                        value: item.id,
+                        elIndex: item.id
+                    })
+                })
+
+                this.setState({
+                    commissionArray: commissionNames
+                    }
+                )
+            })
     }
-
     render() {
-        const {selected} = this.state;
+        const {commission} = this.state;
         const {selectedOption} = this.state;
-        const date = this.state;
-        //("DATE: ", date);
+        console.log(commission)
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className='col-sm-6'>
-                        <div className="form-group">
-                            <h2>Select defence date:</h2>
-                            {/*<Form.Control*/}
-                            {/*    type="date"*/}
-                            {/*    name='date_of_birth'*/}
-                            {/*    id="datepicker"*/}
-                            {/*    value={date}*/}
-                            {/*    onChange={this.handleChangeData}*/}
-                            {/*/>*/}
-                            <DatepickerComponent selectedValue={this.state.selectedDate} onChange={this.handleOnChange}/>
+            <form onSubmit={this.setDefence.bind(this)}>
+                <div className="container">
+                    <div className="row">
+                        <div className='col-sm-6'>
+                            <div className="form-group">
+                                <h2>Select defence date:</h2>
+                                <DatepickerComponent selectedValue={this.state.selectedDate}
+                                                     onChange={this.handleOnChange}/>
+                            </div>
                         </div>
                     </div>
+                    <br/><br/><br/>
+                    <h2>Select Commission Members:</h2>
+                    <MultiSelect
+                        options={this.state.commissionArray}
+                        selected={commission}
+                        onSelectedChanged={commission => this.setState({commission})}
+                    />
+                    <br/><br/><br/>
+                    <h2>Select Stage:</h2>
+                    <Select
+                        value={selectedOption}
+                        onChange={this.handleChange}
+                        options={this.state.stages}
+                    />
+                    <br/>
+                    <button className="btn btn-info" type="submit">
+                        Set Defence!
+                    </button>
                 </div>
-                <br/><br/><br/>
-                <h2>Select Commission Members:</h2>
-                <MultiSelect
-                    options={this.commissionNames}
-                    selected={selected}
-                    onSelectedChanged={selected => this.setState({selected})}
-                />
-                <br/><br/><br/>
-                <h2>Select Stage:</h2>
-                <Select
-                    value={selectedOption}
-                    onChange={this.handleChange}
-                    options={this.stageNames}
-                />
-                <br/>
-                <Link className = "btn btn-info" to={"/admin/team/defence/" + this.state.team.id + "/success"}>
-                    Set Defence!
-                </Link>
-            </div>
+            </form>
         );
     }
 }
