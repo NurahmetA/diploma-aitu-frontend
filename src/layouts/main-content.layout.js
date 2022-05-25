@@ -7,6 +7,7 @@ import AdminProfilePage from "../pages/admin-pages/admin-profile.page";
 import Team from "../components/team.component";
 import TeamDefence from "../components/team-defence-component";
 import CommissionDefencePage from "../pages/commission-pages/defence.page";
+import CommissionDocumentsPage from "../pages/commission-pages/documents.page";
 import DefenceSuccess from "../components/defence-creation-success-component";
 
 function MainContentLayout(props) {
@@ -18,6 +19,7 @@ function MainContentLayout(props) {
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/commission/dashboard" element={<CommissionDashboardPage/>}/>
                 <Route path="/commission/defence/:id" element={<CommissionDefencePage/>}/>
+                <Route path="/commission/documents" element={<CommissionDocumentsPage/>}/>
                 <Route path="/admin/profile" element={<AdminProfilePage/>}/>
                 <Route path="/admin/team/:id" element={<Team/>}/>
                 <Route path="/admin/team/defence/:id" element={<TeamDefence/>}/>

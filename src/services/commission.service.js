@@ -11,6 +11,11 @@ class CommissionService {
     getDefence(id) {
         return axios.get(API_URL + id, { headers: authHeader() })
     }
+
+    addQuestion(teamId, question, grade) {
+        return axios.post(API_URL + teamId + "/question/create", { description: question, grade: grade }, { headers: authHeader() })
+    }
+
 }
 
 export default new CommissionService();
