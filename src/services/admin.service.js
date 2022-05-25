@@ -21,14 +21,14 @@ class AdminService {
     }
 
     setDefenceDate(id, date, commissions, stage) {
-        return axios.post(API_URL + id + "/defence/create", {
-            headers: authHeader(),
-            body: {
+        return axios.post(API_URL + "team/" + id + "/defence/create", {
                 defenceDate: date,
                 commissions: commissions,
                 stageId: stage
-            }
+            },{
+            headers: authHeader()
         });
+
     }
 }
 
