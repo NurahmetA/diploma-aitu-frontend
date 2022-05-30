@@ -9,7 +9,8 @@ import TeamDefence from "../components/team-defence-component";
 import CommissionDefencePage from "../pages/commission-pages/defence.page";
 import CommissionDocumentsPage from "../pages/commission-pages/documents.page";
 import DefenceSuccess from "../components/defence-creation-success-component";
-import SecretaryPage from "../pages/secretary/defence.page";
+import SecretaryPage from "../pages/secretary/dashboard.page";
+import SecretaryDefencePage from "../pages/secretary/defence.page";
 
 function MainContentLayout(props) {
     return (
@@ -26,6 +27,7 @@ function MainContentLayout(props) {
                 <Route path="/admin/team/defence/:id" element={<TeamDefence/>}/>
                 <Route path="/admin/team/defence/:id/success" element={<DefenceSuccess/>}/>
                 <Route path="/secretary" element={<SecretaryPage/>}/>
+                <Route path="/secretary/defence/:id" element={<SecretaryDefencePage/>}/>
             </Routes>
         </div>
     );
