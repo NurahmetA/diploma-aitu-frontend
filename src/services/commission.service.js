@@ -16,6 +16,10 @@ class CommissionService {
         return axios.post(API_URL + teamId + "/question/create", { description: question, grade: grade }, { headers: authHeader() })
     }
 
+    getDocument(defenceId) {
+        return axios.get(API_URL + defenceId + "/document", { headers: authHeader() })
+    }
+
 }
 
 export default new CommissionService();

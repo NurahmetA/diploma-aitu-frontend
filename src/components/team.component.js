@@ -28,7 +28,7 @@ export default class Team extends Component {
                         members: response.data.members
                     });
                 }
-            )
+            );
     };
 
     getListMembers = () =>

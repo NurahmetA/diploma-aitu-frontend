@@ -1,11 +1,8 @@
 import React, {Component} from "react";
 import MultiSelect from "@khanacademy/react-multi-select";
-import {Link} from "react-router-dom";
 import Select from "react-select";
-import Form from "react-bootstrap/Form";
 import AdminService from "../services/admin.service";
 import DatepickerComponent from "./common/datepicker.component";
-import {useLocation} from 'react-router-dom';
 import adminService from "../services/admin.service";
 
 
@@ -44,7 +41,7 @@ export default class TeamDefence extends Component {
         e.preventDefault()
         adminService.setDefenceDate(this.state.teamId, this.state.selectedDate, this.state.commission, this.state.stageId.elIndex)
             .then(response => {
-                console.log(response.data)
+                window.location.href = "/admin/profile";
             })
     }
 
@@ -58,7 +55,7 @@ export default class TeamDefence extends Component {
                 response.data.map(item => {
                     stageNames.push({
                         label: item.name,
-                        value: item.id + 1,
+                        value: item.id,
                         elIndex: item.id
                     })
 

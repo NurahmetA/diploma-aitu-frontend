@@ -17,7 +17,6 @@ function QuestionFormComponent(props) {
                 if (res.status) {
                     window.location.href = "/commission/defence/" + props.teamId;
                 }
-                console.log(res.status);
             })
         }
 

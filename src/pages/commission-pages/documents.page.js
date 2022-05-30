@@ -1,5 +1,7 @@
 import {Component} from "react";
 import CommissionService from "../../services/commission.service";
+import DownloadProtocols from "../../components/download-protocols";
+import LinkToProtocols from "../../components/link-to-protocols";
 
 export default class CommissionDashboardPage extends Component {
     constructor(props) {
@@ -19,6 +21,21 @@ export default class CommissionDashboardPage extends Component {
         })
     };
 
+    downloadFile(defenceId) {
+        CommissionService.getDocument(defenceId).then(response => {
+            this.downloadPDF(response.data);
+        })
+    }
+
+    downloadPDF(pdf) {
+        const linkSource = `data:application/pdf;base64,${pdf}`;
+        const downloadLink = document.createElement("a");
+        const fileName = "abc.pdf";
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    }
+
     listDefences = () =>
         this.state.defences.map(defence => (
             <tr>
@@ -35,10 +52,10 @@ export default class CommissionDashboardPage extends Component {
                     There is no grade
                 </td>
                 <td>
-                    There is no file
+                    <DownloadProtocols defenceId={defence.id}/>
                 </td>
                 <td>
-                    There is no link
+                    <LinkToProtocols defenceId={defence.id}/>
                 </td>
             </tr>
         ));
