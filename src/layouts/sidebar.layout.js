@@ -32,10 +32,14 @@ function SidebarLayout(props) {
                 {props.isSecretary &&
                     <div>
                         <li className="nav-item active">
-                            <Link to="/secretary" className="nav-a">Dashboard</Link>
+                            <Link to="/secretary" className="nav-a">
+                                <i className="fa fa-image"></i> Dashboard
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/secretary/documents" className="nav-a">Documents</Link>
+                            <Link to="/secretary/documents" className="nav-a">
+                                <i className="fa fa-file-archive-o"></i> Documents
+                            </Link>
                         </li>
                     </div>
                 }

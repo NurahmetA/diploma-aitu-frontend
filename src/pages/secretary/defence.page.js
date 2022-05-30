@@ -49,7 +49,7 @@ export default class SecretaryDefencePage extends Component {
                     {grade.fullName}
                 </td>
                 <td>
-                    {grade.grade}
+                    {grade.grade ? grade.grade : "Not Graded"}
                 </td>
                 <td>
                     <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>Edit</button>
@@ -69,7 +69,7 @@ export default class SecretaryDefencePage extends Component {
     setFinalMark(studentId) {
         let grade = prompt("Write down you mark please");
         SecretaryService.setGrade(this.id, studentId, grade).then(response => {
-            window.location.href = "secretary/defence/" + this.id;
+            window.location.reload();
         })
 
     }
