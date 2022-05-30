@@ -29,17 +29,13 @@ function SidebarLayout(props) {
                         </li>
                     </div>
                 }
-                {props.isCommission &&
+                {props.isSecretary &&
                     <div>
                         <li className="nav-item active">
-                            <Link to="/commission/dashboard" className="nav-a">Dashboard</Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to="/commission/defence" className="nav-a">Defence</Link>
+                            <Link to="/secretary" className="nav-a">Dashboard</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/commission/documents" className="nav-a">Documents</Link>
+                            <Link to="/secretary/documents" className="nav-a">Documents</Link>
                         </li>
                     </div>
                 }
