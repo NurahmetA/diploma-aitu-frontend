@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import CommissionService from "../../services/commission.service";
 import QuestionFormComponent from "../../components/question.component";
 import SecretaryService from "../../services/secretary.service";
+import DefenceQuestions from "./defence-questions";
 
 export default class SecretaryDefencePage extends Component {
     constructor(props) {
@@ -14,18 +15,18 @@ export default class SecretaryDefencePage extends Component {
             members: [],
             questions: [],
             question: "",
-            grade: ""
+            grade: "",
+            displayGrades: false,
+            grades: []
         }
-
+        this.showGrades = this.showGrades.bind(this);
+        this.setFinalMark = this.setFinalMark.bind(this);
     }
 
     componentDidMount() {
         SecretaryService.getDefence(this.id).then(res => {
             this.setState({
-                defence: res.data.defence,
-                team: res.data.team.team,
-                members: res.data.team.members,
-                questions: res.data.questions
+                members: res.data.team.members
             })
         });
     };
@@ -41,33 +42,75 @@ export default class SecretaryDefencePage extends Component {
             </div>
         ));
 
-    getListQuestions = () =>
-        this.state.questions.map((question, index) => (
-            <div className="d-flex justify-content-between align-items-center">
-                <div>{++index + ". " + question.description}</div>
-                <div>{question.grade}/100</div>
-            </div>
+    getListMembersAndGrades = () =>
+        this.state.grades.map(grade => (
+            <tr>
+                <td>
+                    {grade.fullName}
+                </td>
+                <td>
+                    {grade.grade}
+                </td>
+                <td>
+                    <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>Edit</button>
+                </td>
+            </tr>
         ));
+
+    showGrades() {
+        SecretaryService.getGrades(this.id).then(response => {
+            this.setState({
+                grades: response.data,
+                displayGrades: !this.state.displayGrades
+            })
+        });
+    }
+
+    setFinalMark(studentId) {
+        let grade = prompt("Write down you mark please");
+        SecretaryService.setGrade(this.id, studentId, grade).then(response => {
+            window.location.href = "secretary/defence/" + this.id;
+        })
+
+    }
 
     render() {
         return (
             <div className="container">
-                <div className="card mb-5">
-                    <div className="card-body">
-                        <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
-                        <hr/>
-                        {this.getListMembers()}
-                    </div>
-                </div>
-                {this.state.questions.length !== 0 &&
+                {!this.state.displayGrades &&
                     <div className="card mb-5">
                         <div className="card-body">
-                            {this.state.questions.length !== 0 && <h5 className="card-title">Questions:</h5>}
-                            {this.getListQuestions()}
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
+                                </div>
+                                <div>
+                                    <button type="button" className="btn btn-info" onClick={this.showGrades}>Grades</button>
+                                </div>
+                            </div>
+                            <hr/>
+                            {this.getListMembers()}
                         </div>
                     </div>
                 }
+                {this.state.displayGrades &&
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Student Full Name</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">
+                                <button type="button" className="btn btn-info" onClick={this.showGrades}>Info</button>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.getListMembersAndGrades()}
+                        </tbody>
+                    </table>
+                }
+                <DefenceQuestions questions={this.state.questions}></DefenceQuestions>
                 <QuestionFormComponent teamId={this.id}/>
             </div>
         );

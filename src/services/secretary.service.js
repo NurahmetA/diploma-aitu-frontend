@@ -12,6 +12,14 @@ class SecretaryService {
         return axios.get(API_URL + "defence/" + defenceId, { headers: authHeader() })
     }
 
+    getGrades(defenceId) {
+        return axios.get(API_URL + defenceId + "/grades", { headers: authHeader() })
+    }
+
+    setGrade(defenceId, userId, grade) {
+        return axios.post(API_URL + defenceId + "/grades/set-grade/" + userId, { grade: grade }, { headers : authHeader() })
+    }
+
 }
 
 export default new SecretaryService();
