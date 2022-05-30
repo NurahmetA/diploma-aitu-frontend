@@ -37,6 +37,7 @@ class App extends Component {
             showStudentBoard: false,
             showProfessorBoard: false,
             showCommissionBoard: false,
+            showSecretaryBoard: false,
             showAdminBoard: false,
             currentUser: undefined,
             isGuestAccount: false
@@ -51,7 +52,8 @@ class App extends Component {
                 showStudentBoard: user.role.includes("ROLE_USER"),
                 showProfessorBoard: user.role.includes("ROLE_PROFESSOR"),
                 showCommissionBoard: user.role.includes("ROLE_COMMISSION"),
-                showAdminBoard: user.role.includes("ROLE_ADMIN")
+                showAdminBoard: user.role.includes("ROLE_ADMIN"),
+                showSecretaryBoard: user.role.includes("ROLE_SECRETARY")
             });
         } else {
             this.setState({
@@ -71,15 +73,16 @@ class App extends Component {
                 }
                 {!this.state.isGuestAccount &&
                     <div className="wrapper d-flex align-items-stretch">
-                        {!this.state.showAdminBoard &&
+                        {!this.state.showAdminBoard && !this.state.showCommissionBoard &&
                             <SidebarLayout isStudent={this.state.showStudentBoard}
                                            isProffessor={this.state.showProfessorBoard}
-                                           isCommission={this.state.showCommissionBoard}/>
+                                           isSecretary={this.state.showSecretaryBoard}/>
                         }
                         <MainContentLayout isStudent={this.state.showStudentBoard}
                                            isProffessor={this.state.showProfessorBoard}
                                            isCommission={this.state.showCommissionBoard}
-                                           isAdmin={this.state.showAdminBoard}/>
+                                           isAdmin={this.state.showAdminBoard}
+                                           isSecretary={this.state.showSecretaryBoard}/>
                     </div>
                 }
             </div>
