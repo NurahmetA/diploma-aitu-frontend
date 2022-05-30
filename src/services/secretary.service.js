@@ -8,6 +8,10 @@ class SecretaryService {
         return axios.get(API_URL + "defence", { headers: authHeader() })
     }
 
+    getDefence(defenceId) {
+        return axios.get(API_URL + "defence/" + defenceId, { headers: authHeader() })
+    }
+
 }
 
 export default new SecretaryService();
