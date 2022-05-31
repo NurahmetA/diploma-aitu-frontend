@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import CommissionService from "../../services/commission.service";
-import QuestionFormComponent from "../../components/question.component";
+import SecretaryQuestionFormComponent from "../../components/question.component";
 import SecretaryService from "../../services/secretary.service";
 import DefenceQuestions from "./defence-questions";
+import MultiSelect from "@khanacademy/react-multi-select";
 
 export default class SecretaryDefencePage extends Component {
     constructor(props) {
@@ -16,6 +17,8 @@ export default class SecretaryDefencePage extends Component {
             questions: [],
             question: "",
             grade: "",
+            studentsArray: [],
+            students: [],
             displayGrades: false,
             grades: []
         }
@@ -27,6 +30,16 @@ export default class SecretaryDefencePage extends Component {
         SecretaryService.getDefence(this.id).then(res => {
             this.setState({
                 members: res.data.team.members
+            })
+            const studentNames = []
+            this.state.members.map(member => {
+                studentNames.push({
+                    label: "" + member.first_name + " " + member.last_name,
+                    value: member.id
+                })
+            })
+            this.setState({
+                studentsArray: studentNames
             })
         });
     };
@@ -75,6 +88,8 @@ export default class SecretaryDefencePage extends Component {
     }
 
     render() {
+        const {students} = this.state;
+        console.log("students" + students)
         return (
             <div className="container">
                 {!this.state.displayGrades &&
@@ -111,7 +126,12 @@ export default class SecretaryDefencePage extends Component {
                     </table>
                 }
                 <DefenceQuestions questions={this.state.questions}></DefenceQuestions>
-                <QuestionFormComponent teamId={this.id}/>
+                <SecretaryQuestionFormComponent teamId={this.id} students={this.state.students}/>
+                <MultiSelect
+                    options={this.state.studentsArray}
+                    selected={students}
+                    onSelectedChanged={students => this.setState({students})}
+                />
             </div>
         );
     }

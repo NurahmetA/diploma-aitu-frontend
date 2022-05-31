@@ -12,8 +12,8 @@ class CommissionService {
         return axios.get(API_URL + id, { headers: authHeader() })
     }
 
-    addQuestion(teamId, question, grade) {
-        return axios.post(API_URL + teamId + "/question/create", { description: question, grade: grade }, { headers: authHeader() })
+    addQuestion(teamId, question, grade, students) {
+        return axios.post(API_URL + teamId + "/question/create", { description: question, grade: grade, studentIds: students }, { headers: authHeader() })
     }
 
     getDocument(defenceId) {
