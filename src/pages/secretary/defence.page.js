@@ -18,19 +18,19 @@ export default class SecretaryDefencePage extends Component {
             studentsArray: [],
             students: [],
             displayGrades: false,
-            grades: []
+            grades: [],
+            teamInfo: {"": ""}
         }
         this.showGrades = this.showGrades.bind(this);
         this.setFinalMark = this.setFinalMark.bind(this);
     }
 
     componentDidMount() {
-        console.log("ID: " + this.id);
         SecretaryService.getDefence(this.id).then(res => {
-            console.log(res.data);
             this.setState({
                 members: res.data.team.members,
-                questions: res.data.questions
+                questions: res.data.questions,
+                teamInfo: res.data.team.team
             })
             const studentNames = []
             this.state.members.map(member => {
@@ -43,7 +43,6 @@ export default class SecretaryDefencePage extends Component {
                 studentsArray: studentNames
             })
         });
-        console.log(this.state.questions);
     };
 
     getListQuestions = () =>
@@ -109,7 +108,6 @@ export default class SecretaryDefencePage extends Component {
 
     render() {
         const {students} = this.state;
-        console.log("students " + students)
         return (
             <div className="container">
                 {!this.state.displayGrades &&
@@ -117,8 +115,8 @@ export default class SecretaryDefencePage extends Component {
                         <div className="card-body">
                             <div className="d-flex justify-content-between">
                                 <div>
-                                    <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
+                                    <h5 className="card-title">Project Topic: {this.state.teamInfo.topic}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.teamInfo.name}</h6>
                                 </div>
                                 <div>
                                     <button type="button" className="btn btn-info" onClick={this.showGrades}>Grades</button>

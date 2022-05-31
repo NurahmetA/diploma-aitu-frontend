@@ -22,19 +22,13 @@ export default class TeamDefence extends Component {
     }
 
     handleChange = (stageId) => {
-        this.setState({stageId}, () =>
-            console.log(`Option selected:`, this.state.stageId)
-        );
+        this.setState({stageId});
     };
 
     handleOnChange = (event) => {
         this.setState({
             selectedDate: event.target.value
-        }, () =>
-            console.log(`Date selected:`, this.state.selectedDate))
-        console.log(`Date type:`, typeof this.state.selectedDate)
-        console.warn("com" + this.state.commission)
-        console.log("stage" + this.state.stageId.elIndex)
+        });
     }
 
     setDefence = (e) => {
@@ -85,7 +79,6 @@ export default class TeamDefence extends Component {
     render() {
         const {commission} = this.state;
         const {selectedOption} = this.state;
-        console.log(commission)
 
         return (
             <form onSubmit={this.setDefence.bind(this)}>

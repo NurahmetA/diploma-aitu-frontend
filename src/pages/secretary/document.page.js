@@ -9,7 +9,8 @@ export default class SecretaryDocumentPage extends Component {
         this.state = {
             defences: [],
             team: [],
-            members: []
+            members: [],
+            teamInfo: {"": ""}
         };
     }
 
@@ -18,17 +19,31 @@ export default class SecretaryDocumentPage extends Component {
             this.setState({
                 defences: response.data.defence,
                 team: response.data.team,
-                members: response.data.team.members
+                members: response.data.team.members,
+                teamInfo: response.data.team.team
             })
         })
     };
 
-    downloadProtocol1(studentId) {
+    downloadFirstProtocol(studentId) {
         SecretaryService.getFirstProtocol(studentId).then(response => {
             if (response) {
                 const linkSource = `data:application/pdf;base64,${response.data}`;
                 const downloadLink = document.createElement("a");
-                const fileName = "abc.pdf";
+                const fileName = `${this.state.team.name}_protocol_1.pdf`;
+                downloadLink.href = linkSource;
+                downloadLink.download = fileName;
+                downloadLink.click();
+            }
+        })
+    }
+
+    downloadSecondProtocol(studentId) {
+        SecretaryService.getSecondProtocol(studentId).then(response => {
+            if (response) {
+                const linkSource = `data:application/pdf;base64,${response.data}`;
+                const downloadLink = document.createElement("a");
+                const fileName = `${this.state.team.name}_protocol_2.pdf`;
                 downloadLink.href = linkSource;
                 downloadLink.download = fileName;
                 downloadLink.click();
@@ -45,11 +60,12 @@ export default class SecretaryDocumentPage extends Component {
                     </p>
                     <p className="card-text">
                         <button type="button" className="btn btn-primary" title="1st protocol"
-                                onClick={() => this.downloadProtocol1(member.id)}>
+                                onClick={() => this.downloadFirstProtocol(member.id)}>
                             <i className="fa fa-download"></i>
                         </button>
                         {"   "}
-                        <button type="button" className="btn btn-primary" title="2nd protocol">
+                        <button type="button" className="btn btn-primary" title="2nd protocol"
+                                onClick={() => this.downloadSecondProtocol(member.id)}>
                             <i className="fa fa-download"></i>
                         </button>
                     </p>
@@ -66,8 +82,8 @@ export default class SecretaryDocumentPage extends Component {
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
                             <div>
-                                <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
-                                <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
+                                <h5 className="card-title">Project Topic: {this.state.teamInfo.topic}</h5>
+                                <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.teamInfo.name}</h6>
                             </div>
                         </div>
                         <hr/>

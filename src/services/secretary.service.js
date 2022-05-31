@@ -30,6 +30,10 @@ class SecretaryService {
         return axios.get(API_URL + userId + "/document/protocol-first", { headers: authHeader() })
     }
 
+    getSecondProtocol(userId) {
+        return axios.get(API_URL + userId + "/document/protocol-second", { headers: authHeader() })
+    }
+
 }
 
 export default new SecretaryService();

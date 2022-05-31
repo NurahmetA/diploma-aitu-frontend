@@ -70,7 +70,6 @@ export default class CommissionDashboardPage extends Component {
 
     render() {
         const {students} = this.state;
-        console.log("students" + students)
         return (
             <div className="container">
                 <div className="card mb-5">
