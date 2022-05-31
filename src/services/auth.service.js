@@ -15,6 +15,8 @@ class AuthService {
                         window.location.href = "/admin/profile";
                     } else if (response.data.role.includes("ROLE_SECRETARY")) {
                         window.location.href = "/secretary";
+                    } else if(response.data.role.includes("ROLE_COMMISSION")) {
+                        window.location.href = "/commission/dashboard"
                     } else {
                         window.location.href = "/profile";
                     }

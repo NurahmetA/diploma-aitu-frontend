@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import CommissionService from "../../services/commission.service";
-import SecretaryQuestionFormComponent from "../../components/question.component";
 import SecretaryService from "../../services/secretary.service";
-import DefenceQuestions from "./defence-questions";
 import MultiSelect from "@khanacademy/react-multi-select";
+import SecretaryQuestionFormComponent from "../../components/secretary-question.component";
 
 export default class SecretaryDefencePage extends Component {
     constructor(props) {
@@ -27,9 +25,12 @@ export default class SecretaryDefencePage extends Component {
     }
 
     componentDidMount() {
+        console.log("ID: " + this.id);
         SecretaryService.getDefence(this.id).then(res => {
+            console.log(res.data);
             this.setState({
-                members: res.data.team.members
+                members: res.data.team.members,
+                questions: res.data.questions
             })
             const studentNames = []
             this.state.members.map(member => {
@@ -42,12 +43,28 @@ export default class SecretaryDefencePage extends Component {
                 studentsArray: studentNames
             })
         });
+        console.log(this.state.questions);
     };
+
+    getListQuestions = () =>
+        this.state.questions.map((question, index) => (
+            <tr>
+                <td>
+                    {question.responderName}
+                </td>
+                <td>
+                    {question.description}
+                </td>
+                <td>
+                    {question.grade}
+                </td>
+            </tr>
+        ));
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
             <div>
-                <p className="card-text d-flex justify-content-between">
+                <p className="card-text d-flex justify-content-between onTeamHover">
                     Team Member #{++index}: {member.first_name} {member.last_name} <a
                     href={"mailto:" + member.email}>{member.email}</a>
                 </p>
@@ -57,17 +74,20 @@ export default class SecretaryDefencePage extends Component {
 
     getListMembersAndGrades = () =>
         this.state.grades.map(grade => (
-            <tr>
-                <td>
-                    {grade.fullName}
-                </td>
-                <td>
-                    {grade.grade ? grade.grade : "Not Graded"}
-                </td>
-                <td>
-                    <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>Edit</button>
-                </td>
-            </tr>
+            <div>
+                <div className="d-flex justify-content-between">
+                    <p className="card-text">
+                        {grade.fullName}
+                    </p>
+                    <p className="card-text">
+                        Final Grade: {grade.grade ? grade.grade : "Not Graded"}
+                    </p>
+                    <p className="card-text">
+                        <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>Edit</button>
+                    </p>
+                </div>
+                <hr/>
+            </div>
         ));
 
     showGrades() {
@@ -89,7 +109,7 @@ export default class SecretaryDefencePage extends Component {
 
     render() {
         const {students} = this.state;
-        console.log("students" + students)
+        console.log("students " + students)
         return (
             <div className="container">
                 {!this.state.displayGrades &&
@@ -110,22 +130,34 @@ export default class SecretaryDefencePage extends Component {
                     </div>
                 }
                 {this.state.displayGrades &&
-                    <table className="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Student Full Name</th>
-                            <th scope="col">Grade</th>
-                            <th scope="col">
-                                <button type="button" className="btn btn-info" onClick={this.showGrades}>Info</button>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.getListMembersAndGrades()}
-                        </tbody>
-                    </table>
+                    <div className="card mb-5">
+                        <div className="card-body">
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
+                                </div>
+                                <div>
+                                    <button type="button" className="btn btn-info" onClick={this.showGrades}>Info</button>
+                                </div>
+                            </div>
+                            <hr/>
+                            {this.getListMembersAndGrades()}
+                        </div>
+                    </div>
                 }
-                <DefenceQuestions questions={this.state.questions}></DefenceQuestions>
+                <table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Student</th>
+                        <th scope="col">Question</th>
+                        <th scope="col">Grade</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.getListQuestions()}
+                    </tbody>
+                </table>
                 <SecretaryQuestionFormComponent teamId={this.id} students={this.state.students}/>
                 <MultiSelect
                     options={this.state.studentsArray}
