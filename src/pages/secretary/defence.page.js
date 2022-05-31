@@ -17,6 +17,8 @@ export default class SecretaryDefencePage extends Component {
             grade: "",
             studentsArray: [],
             students: [],
+            commissionArray: [],
+            commissions: [],
             displayGrades: false,
             grades: [],
             teamInfo: {"": ""}
@@ -43,6 +45,22 @@ export default class SecretaryDefencePage extends Component {
                 studentsArray: studentNames
             })
         });
+
+        SecretaryService.getCommissions(this.id).then(res => {
+            this.setState({
+                commission: res.data
+            })
+            const commissionNames = []
+            this.state.commission.map(com => {
+                commissionNames.push({
+                    label: "" + com.first_name + " " + com.last_name,
+                    value: com.id
+                })
+            })
+            this.setState({
+                commissionArray: commissionNames
+            })
+        });
     };
 
     getListQuestions = () =>
@@ -55,7 +73,7 @@ export default class SecretaryDefencePage extends Component {
                     {question.description}
                 </td>
                 <td>
-                    {question.grade}
+                    {question.questioner}
                 </td>
             </tr>
         ));
@@ -90,12 +108,7 @@ export default class SecretaryDefencePage extends Component {
         ));
 
     showGrades() {
-        SecretaryService.getGrades(this.id).then(response => {
-            this.setState({
-                grades: response.data,
-                displayGrades: !this.state.displayGrades
-            })
-        });
+        window.location.pathname = "/secretary/defence/grades/" + this.id;
     }
 
     setFinalMark(studentId) {
@@ -108,6 +121,7 @@ export default class SecretaryDefencePage extends Component {
 
     render() {
         const {students} = this.state;
+        const {commissions} = this.state;
         return (
             <div className="container">
                 {!this.state.displayGrades &&
@@ -127,41 +141,40 @@ export default class SecretaryDefencePage extends Component {
                         </div>
                     </div>
                 }
-                {this.state.displayGrades &&
-                    <div className="card mb-5">
-                        <div className="card-body">
-                            <div className="d-flex justify-content-between">
-                                <div>
-                                    <h5 className="card-title">Project Topic: {this.state.team.topic}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Team Name: {this.state.team.name}</h6>
-                                </div>
-                                <div>
-                                    <button type="button" className="btn btn-info" onClick={this.showGrades}>Info</button>
-                                </div>
-                            </div>
-                            <hr/>
-                            {this.getListMembersAndGrades()}
-                        </div>
+
+                <div className="row mb-5">
+                    <div className="col-3">
+                        <MultiSelect
+                            options={this.state.commissionArray}
+                            selected={commissions}
+                            onSelectedChanged={commissions => this.setState({commissions})}
+                        />
                     </div>
-                }
+                    <div className="col-3">
+                        <MultiSelect
+                            options={this.state.studentsArray}
+                            selected={students}
+                            onSelectedChanged={students => this.setState({students})}
+                        />
+                    </div>
+                    <div className="col-5">
+                        <SecretaryQuestionFormComponent teamId={this.id} students={this.state.students} commission={commissions[0]}/>
+                    </div>
+                </div>
+
                 <table className="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">Student</th>
                         <th scope="col">Question</th>
-                        <th scope="col">Grade</th>
+                        <th scope="col">Questioner</th>
                     </tr>
                     </thead>
                     <tbody>
                     {this.getListQuestions()}
                     </tbody>
                 </table>
-                <SecretaryQuestionFormComponent teamId={this.id} students={this.state.students}/>
-                <MultiSelect
-                    options={this.state.studentsArray}
-                    selected={students}
-                    onSelectedChanged={students => this.setState({students})}
-                />
+
             </div>
         );
     }

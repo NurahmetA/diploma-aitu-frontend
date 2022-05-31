@@ -41,8 +41,6 @@ export default class CommissionDashboardPage extends Component {
                 studentsArray: studentNames
             })
         });
-
-
     };
 
 
@@ -50,9 +48,8 @@ export default class CommissionDashboardPage extends Component {
     getListMembers = () =>
         this.state.members.map((member, index) => (
             <div>
-                <p className="card-text d-flex justify-content-between">
-                    Team Member #{++index}: {member.first_name} {member.last_name} <a
-                    href={"mailto:" + member.email}>{member.email}></a>
+                <p className="card-text">
+                    Team Member #{++index}: {member.first_name} {member.last_name}
                 </p>
                 <hr/>
             </div>
@@ -60,11 +57,9 @@ export default class CommissionDashboardPage extends Component {
 
     getListQuestions = () =>
         this.state.questions.map((question, index) => (
-            <div className="d-flex justify-content-between ">
+            <div className="d-flex justify-content-between">
                 <div>{question.responderName}</div>
                 <div>{++index + ". " + question.description}</div>
-                <div>{question.grade}/100</div>
-
             </div>
         ));
 
@@ -80,21 +75,33 @@ export default class CommissionDashboardPage extends Component {
                         {this.getListMembers()}
                     </div>
                 </div>
-                {this.state.questions.length !== 0 &&
-                    <div className="card mb-5">
-                        <div className="card-body">
-                            {this.state.questions.length !== 0 && <h5 className="card-title">Questions:</h5>}
-                            {this.getListQuestions()}
-                        </div>
-                    </div>
-                }
 
-                <QuestionFormComponent teamId={this.id} students={this.state.students}/>
-                <MultiSelect
-                    options={this.state.studentsArray}
-                    selected={students}
-                    onSelectedChanged={students => this.setState({students})}
-                />
+                <div className="row">
+                    <div className="col-6">
+                        <MultiSelect
+                            options={this.state.studentsArray}
+                            selected={students}
+                            onSelectedChanged={students => this.setState({students})}
+                        />
+                    </div>
+                    <div className="col-6">
+                        <QuestionFormComponent teamId={this.id} students={this.state.students}/>
+                    </div>
+                </div>
+
+
+                {this.state.questions.length !== 0 &&
+                <div className="card mt-5">
+                    <div className="card-body">
+                        {this.state.questions.length !== 0 && <h5 className="card-title">Questions:</h5>}
+                        {this.getListQuestions()}
+                    </div>
+                </div>
+                }
+                <div className="row d-flex justify-content-center">
+                    <button type="button" className="btn btn-outline-danger mt-5"
+                            onClick={()=> window.location.pathname ="commission/defence/grades/" + this.id}>Set Grades</button>
+                </div>
             </div>
         );
     }

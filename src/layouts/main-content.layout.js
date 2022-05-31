@@ -13,25 +13,29 @@ import SecretaryPage from "../pages/secretary/dashboard.page";
 import SecretaryDefencePage from "../pages/secretary/defence.page";
 import SecretaryDocumentsPage from "../pages/secretary/documents.page";
 import SecretaryDocumentPage from "../pages/secretary/document.page";
+import CommissionGradesPage from "../pages/commission-pages/grades.page";
+import SecretaryGradesPage from "../pages/secretary/grades.page";
 //import SecretaryDocumentsPage from "../pages/secretary/documents.page";
 //import SecretaryDocumentPage from "../pages/secretary/document.page";
 
 function MainContentLayout(props) {
     return (
         <div id="content">
-            <HeaderLayout isAdmin={props.isAdmin} isSecretary={props.isSecretary}/>
+            <HeaderLayout isAdmin={props.isAdmin} isSecretary={props.isSecretary} isCommission={props.isCommission}/>
             <Routes>
                 <Route path="/auth" element={<LoginPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/commission/dashboard" element={<CommissionDashboardPage/>}/>
                 <Route path="/commission/defence/:id" element={<CommissionDefencePage/>}/>
                 <Route path="/commission/documents" element={<CommissionDocumentsPage/>}/>
+                <Route path="/commission/defence/grades/:id" element={<CommissionGradesPage/>}/>
                 <Route path="/admin/profile" element={<AdminProfilePage/>}/>
                 <Route path="/admin/team/:id" element={<Team/>}/>
                 <Route path="/admin/team/defence/:id" element={<TeamDefence/>}/>
                 <Route path="/admin/team/defence/:id/success" element={<DefenceSuccess/>}/>
                 <Route path="/secretary" element={<SecretaryPage/>}/>
                 <Route path="/secretary/defence/:id" element={<SecretaryDefencePage/>}/>
+                <Route path="/secretary/defence/grades/:id" element={<SecretaryGradesPage/>}/>
                 <Route path="/secretary/documents" element={<SecretaryDocumentsPage/>}/>
                 <Route path="/secretary/documents/:id" element={<SecretaryDocumentPage/>}/>
             </Routes>

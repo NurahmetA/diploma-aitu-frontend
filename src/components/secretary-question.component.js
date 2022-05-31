@@ -11,10 +11,9 @@ function SecretaryQuestionFormComponent(props) {
     const submitHandler = (event) => {
         event.preventDefault();
         const question = questionInputRef.valueOf().current.value.toString();
-        const grade = gradeInputRef.valueOf().current.value.toString();
 
-        if (question && grade) {
-            SecretaryService.addQuestion(props.teamId, question, grade, props.students).then(res => {
+        if (question && props.students && props.commission) {
+            SecretaryService.addQuestion(props.teamId, question, props.students, props.commission).then(res => {
                 if (res.status) {
                     window.location.href = "/secretary/defence/" + props.teamId;
                 }
@@ -27,20 +26,12 @@ function SecretaryQuestionFormComponent(props) {
     return (
         <form onSubmit={submitHandler}>
             <div className="row">
-                <div className="col-9">
+                <div className="col-10">
                     <input type="text" className="form-control" placeholder="Question" ref={questionInputRef} required/>
                 </div>
-                <div className="col-3">
-                    <input type="number" max="100" min="0" className="form-control" placeholder="Grade"
-                           ref={gradeInputRef} required/>
-                </div>
-            </div>
-            <div className="row mt-4">
-                <div className="col-5"></div>
-                <div className="col-2">
+                <div className="col-1">
                     <button type="submit" className="btn btn-info">+</button>
                 </div>
-                <div className="col-5"></div>
             </div>
         </form>
     );

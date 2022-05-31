@@ -19,10 +19,15 @@ function HeaderLayout(props) {
                                 <Link to="/admin/profile" className="nav-link">Admin Page</Link>
                             </li>
                         }
-                        {!props.isAdmin &&
+                        {!props.isAdmin && !props.isCommission &&
                             <li className="nav-item">
                                 <Link to="/profile" className="nav-link">Profile</Link>
                             </li>
+                        }
+                        {props.isCommission &&
+                        <li className="nav-item">
+                            <Link to="/commission/dashboard" className="nav-link">Dashboard</Link>
+                        </li>
                         }
                         <li className="nav-item logout">
                             <p onClick={authService.logout} className="nav-link">Log Out</p>
