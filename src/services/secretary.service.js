@@ -26,8 +26,8 @@ class SecretaryService {
         return axios.post(API_URL + defenceId + "/grades/set-grade/" + userId, { grade: grade }, { headers : authHeader() })
     }
 
-    getDocument(userId) {
-        return axios.get(API_URL + userId + "/document", { headers: authHeader() })
+    getFirstProtocol(userId) {
+        return axios.get(API_URL + userId + "/document/protocol-first", { headers: authHeader() })
     }
 
 }

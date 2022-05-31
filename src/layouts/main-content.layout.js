@@ -11,6 +11,8 @@ import CommissionDocumentsPage from "../pages/commission-pages/documents.page";
 import DefenceSuccess from "../components/defence-creation-success-component";
 import SecretaryPage from "../pages/secretary/dashboard.page";
 import SecretaryDefencePage from "../pages/secretary/defence.page";
+import SecretaryDocumentsPage from "../pages/secretary/documents.page";
+import SecretaryDocumentPage from "../pages/secretary/document.page";
 //import SecretaryDocumentsPage from "../pages/secretary/documents.page";
 //import SecretaryDocumentPage from "../pages/secretary/document.page";
 
@@ -30,8 +32,8 @@ function MainContentLayout(props) {
                 <Route path="/admin/team/defence/:id/success" element={<DefenceSuccess/>}/>
                 <Route path="/secretary" element={<SecretaryPage/>}/>
                 <Route path="/secretary/defence/:id" element={<SecretaryDefencePage/>}/>
-                {/*<Route path="/secretary/documents" element={<SecretaryDocumentsPage/>}/>*/}
-                {/*<Route path="/secretary/documents/:id" element={<SecretaryDocumentPage/>}/>*/}
+                <Route path="/secretary/documents" element={<SecretaryDocumentsPage/>}/>
+                <Route path="/secretary/documents/:id" element={<SecretaryDocumentPage/>}/>
             </Routes>
         </div>
     );
