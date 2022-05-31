@@ -1,8 +1,9 @@
 import {useRef} from 'react';
 
 import CommissionService from "../services/commission.service";
+import SecretaryService from "../services/secretary.service";
 
-function QuestionFormComponent(props) {
+function SecretaryQuestionFormComponent(props) {
     const questionInputRef = useRef();
     const gradeInputRef = useRef();
 
@@ -13,9 +14,9 @@ function QuestionFormComponent(props) {
         const grade = gradeInputRef.valueOf().current.value.toString();
 
         if (question && grade) {
-            CommissionService.addQuestion(props.teamId, question, grade, props.students).then(res => {
+            SecretaryService.addQuestion(props.teamId, question, grade, props.students).then(res => {
                 if (res.status) {
-                    window.location.href = "/commission/defence/" + props.teamId;
+                    window.location.href = "/secretary/defence/" + props.teamId;
                 }
             })
         }
@@ -45,4 +46,4 @@ function QuestionFormComponent(props) {
     );
 }
 
-export default QuestionFormComponent;
+export default SecretaryQuestionFormComponent;

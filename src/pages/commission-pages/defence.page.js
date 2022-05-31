@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import CommissionService from "../../services/commission.service";
 import QuestionFormComponent from "../../components/question.component";
+import MultiSelect from "@khanacademy/react-multi-select";
 
 export default class CommissionDashboardPage extends Component {
     constructor(props) {
@@ -13,7 +14,9 @@ export default class CommissionDashboardPage extends Component {
             members: [],
             questions: [],
             question: "",
-            grade: ""
+            grade: "",
+            studentsArray: [],
+            students: []
         }
 
     }
@@ -26,8 +29,23 @@ export default class CommissionDashboardPage extends Component {
                 members: res.data.team.members,
                 questions: res.data.questions
             })
+            const studentNames = []
+            this.state.members.map(member => {
+                studentNames.push({
+                    label: "" + member.first_name + " " + member.last_name,
+                    value: member.id
+                })
+            })
+
+            this.setState({
+                studentsArray: studentNames
+            })
         });
+
+
     };
+
+
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
@@ -42,13 +60,17 @@ export default class CommissionDashboardPage extends Component {
 
     getListQuestions = () =>
         this.state.questions.map((question, index) => (
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between ">
+                <div>{question.responderName}</div>
                 <div>{++index + ". " + question.description}</div>
                 <div>{question.grade}/100</div>
+
             </div>
         ));
 
     render() {
+        const {students} = this.state;
+        console.log("students" + students)
         return (
             <div className="container">
                 <div className="card mb-5">
@@ -67,7 +89,13 @@ export default class CommissionDashboardPage extends Component {
                         </div>
                     </div>
                 }
-                <QuestionFormComponent teamId={this.id}/>
+
+                <QuestionFormComponent teamId={this.id} students={this.state.students}/>
+                <MultiSelect
+                    options={this.state.studentsArray}
+                    selected={students}
+                    onSelectedChanged={students => this.setState({students})}
+                />
             </div>
         );
     }
