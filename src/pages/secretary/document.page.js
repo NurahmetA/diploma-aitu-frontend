@@ -51,7 +51,7 @@ export default class SecretaryDocumentPage extends Component {
                 let documentName;
                 this.state.members.map(member => {
                     if (member.id === studentId) {
-                        documentName = member.lastName + " " + member.firstName;
+                        documentName = member.last_name + " " + member.first_name;
                     }
                 })
                 console.log(documentName);
