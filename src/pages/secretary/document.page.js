@@ -31,9 +31,10 @@ export default class SecretaryDocumentPage extends Component {
                 let documentName;
                 this.state.members.map(member => {
                     if (member.id === studentId) {
-                        documentName = member.lastName + " " + member.firstName;
+                        documentName = member.last_name + " " + member.first_name;
                     }
                 })
+                console.log(documentName)
                 const linkSource = `data:application/pdf;base64,${response.data}`;
                 const downloadLink = document.createElement("a");
                 const fileName = `${documentName}_protocol_1.pdf`;
