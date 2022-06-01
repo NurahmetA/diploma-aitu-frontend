@@ -49,9 +49,6 @@ export default class SecretaryDocumentsPage extends Component {
                     {defence.defenceDate.join("-")}
                 </td>
                 <td>
-                    {defence.grade ? defence.grade : "Not Graded"}
-                </td>
-                <td>
                     {defence.stage}
                 </td>
                 {/*<td>
@@ -76,7 +73,6 @@ export default class SecretaryDocumentsPage extends Component {
                         <th scope="col">Team</th>
                         <th scope="col">Project Topic</th>
                         <th scope="col">Defence Date</th>
-                        <th scope="col">Grade</th>
                         <th scope="col">Stage</th>
                     </tr>
                     </thead>
