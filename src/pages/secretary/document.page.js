@@ -28,9 +28,15 @@ export default class SecretaryDocumentPage extends Component {
     downloadFirstProtocol(studentId) {
         SecretaryService.getFirstProtocol(studentId).then(response => {
             if (response) {
+                let documentName;
+                this.state.members.map(member => {
+                    if (member.id === studentId) {
+                        documentName = member.lastName + " " + member.firstName;
+                    }
+                })
                 const linkSource = `data:application/pdf;base64,${response.data}`;
                 const downloadLink = document.createElement("a");
-                const fileName = `${this.state.team.name}_protocol_1.pdf`;
+                const fileName = `${documentName}_protocol_1.pdf`;
                 downloadLink.href = linkSource;
                 downloadLink.download = fileName;
                 downloadLink.click();
@@ -41,9 +47,16 @@ export default class SecretaryDocumentPage extends Component {
     downloadSecondProtocol(studentId) {
         SecretaryService.getSecondProtocol(studentId).then(response => {
             if (response) {
+                let documentName;
+                this.state.members.map(member => {
+                    if (member.id === studentId) {
+                        documentName = member.lastName + " " + member.firstName;
+                    }
+                })
+                console.log(documentName);
                 const linkSource = `data:application/pdf;base64,${response.data}`;
                 const downloadLink = document.createElement("a");
-                const fileName = `${this.state.team.name}_protocol_2.pdf`;
+                const fileName = `${documentName}_protocol_2.pdf`;
                 downloadLink.href = linkSource;
                 downloadLink.download = fileName;
                 downloadLink.click();
