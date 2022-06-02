@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/auth/";
+const API_URL = "https://diploma-aitu-backend.herokuapp.com/auth/";
 
 class AuthService {
     login(username, password) {
@@ -56,7 +56,7 @@ export function authHeader() {
 
     if (user && user.authenticationToken) {
         return { Authorization: 'Bearer ' + user.authenticationToken,
-            "Access-Control-Allow-Origin":"http://localhost:8081" }; // for Spring Boot back-end
+            "Access-Control-Allow-Origin":"https://diploma-aitu-backend.herokuapp.com/" }; // for Spring Boot back-end
         // return { 'x-access-token': user.authenticationToken,
         //};       // for Node.js Express back-end
     } else {
