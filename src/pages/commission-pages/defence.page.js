@@ -60,8 +60,17 @@ export default class CommissionDashboardPage extends Component {
             <div className="d-flex justify-content-between">
                 <div>{question.responderName}</div>
                 <div>{++index + ". " + question.description}</div>
+                <button className="btn btn-outline-danger"
+                        onClick={() => this.editQuestion(question.questionId, question.description, question.responderName)}>Edit</button>
             </div>
         ));
+
+    editQuestion(questionId, description, responderName) {
+        let desc = prompt("You are editing question for" + responderName, description);
+        CommissionService.updateQuestion(questionId, desc).then(res => {
+            window.location.reload();
+        })
+    }
 
     render() {
         const {students} = this.state;
