@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import SecretaryService from "../../services/secretary.service"
+import CommissionService from "../../services/commission.service";
 
 export default class SecretaryGradesPage extends Component {
     constructor(props) {
@@ -29,9 +30,13 @@ export default class SecretaryGradesPage extends Component {
 
     setFinalMark(studentId) {
         let grade = prompt("Write down you mark please");
-        SecretaryService.setGrade(this.id, studentId, grade).then(res => {
-            if (res) window.location.reload()
-        });
+        if (grade >= 0 && grade <= 100) {
+            SecretaryService.setGrade(this.id, studentId, grade).then(res => {
+                if (res) window.location.reload()
+            });
+        } else {
+            alert("Please write down mark from 0 to 100")
+        }
     }
 
     showInfo(defenceId) {

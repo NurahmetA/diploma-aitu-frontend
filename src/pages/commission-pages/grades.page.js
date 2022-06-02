@@ -30,9 +30,13 @@ export default class CommissionGradesPage extends Component {
 
     setFinalMark(studentId) {
         let grade = prompt("Write down you mark please");
-        CommissionService.setGrade(this.id, studentId, grade).then(res => {
-            if (res) window.location.reload()
-        });
+        if (grade >= 0 && grade <= 100) {
+            CommissionService.setGrade(this.id, studentId, grade).then(res => {
+                if (res) window.location.reload()
+            });
+        } else {
+            alert("Please write down mark from 0 to 100")
+        }
     }
 
     getListMembersAndGrades = () =>
@@ -45,11 +49,11 @@ export default class CommissionGradesPage extends Component {
                     <p className="card-text">
                         Final Grade: {grade.grade !== null ? grade.grade : "Not Graded"}
                     </p>
-                    {!grade.grade &&
-                        <p className="card-text">
-                            <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>Set Grade</button>
-                        </p>
-                    }
+                    <p className="card-text">
+                        <button type="button" className="btn btn-danger" onClick={() => this.setFinalMark(grade.id)}>
+                            {!grade.grade ? "Set Grade" : "Edit Grade"}
+                        </button>
+                    </p>
                 </div>
                 <hr/>
             </div>
