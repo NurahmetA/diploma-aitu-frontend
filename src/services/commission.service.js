@@ -27,6 +27,10 @@ class CommissionService {
     setGrade(defenceId, studentId, grade) {
         return axios.post(API_URL + defenceId + "/set-grade/" + studentId, { grade: grade }, { headers: authHeader() })
     }
+
+    updateQuestion(questionId, question) {
+        return axios.put(API_URL + questionId + "/question/update", { description: question }, { headers: authHeader() })
+    }
 }
 
 export default new CommissionService();
