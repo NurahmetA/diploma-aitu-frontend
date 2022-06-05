@@ -48,7 +48,7 @@ export default class CommissionDashboardPage extends Component {
     getListMembers = () =>
         this.state.members.map((member, index) => (
             <div>
-                <p className="card-text">
+                <p className={member.isHonor ? "card-text isHonor" : "card-text"}>
                     Team Member #{++index}: {member.first_name} {member.last_name}
                 </p>
                 <hr/>
