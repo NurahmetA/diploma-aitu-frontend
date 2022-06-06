@@ -26,8 +26,13 @@ function HeaderLayout(props) {
                         }
                         {props.isCommission &&
                         <li className="nav-item">
-                            <Link to="/commission/dashboard" className="nav-link">Dashboard</Link>
+                            <a href="\\10.1.11.21\Deps\DCI" target="_blank" className="nav-link">Documents</a>
                         </li>
+                        }
+                        {props.isCommission &&
+                            <li className="nav-item">
+                                <Link to="/commission/dashboard" className="nav-link">Dashboard</Link>
+                            </li>
                         }
                         <li className="nav-item logout">
                             <p onClick={authService.logout} className="nav-link">Log Out</p>
