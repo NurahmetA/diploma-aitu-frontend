@@ -30,7 +30,7 @@ export default class CommissionGradesPage extends Component {
 
     setFinalMark(studentId) {
         let grade = prompt("Write down you mark please");
-        if (grade >= 0 && grade <= 100) {
+        if (grade && (grade >= 0 && grade <= 100)) {
             CommissionService.setGrade(this.id, studentId, grade).then(res => {
                 if (res) window.location.reload()
             });

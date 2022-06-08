@@ -19,16 +19,6 @@ function HeaderLayout(props) {
                                 <Link to="/admin/profile" className="nav-link">Admin Page</Link>
                             </li>
                         }
-                        {!props.isAdmin && !props.isCommission &&
-                            <li className="nav-item">
-                                <Link to="/profile" className="nav-link">Profile</Link>
-                            </li>
-                        }
-                        {props.isCommission &&
-                        <li className="nav-item">
-                            <a href="\\10.1.11.21\Deps\DCI" target="_blank" className="nav-link">Documents</a>
-                        </li>
-                        }
                         {props.isCommission &&
                             <li className="nav-item">
                                 <Link to="/commission/dashboard" className="nav-link">Dashboard</Link>
