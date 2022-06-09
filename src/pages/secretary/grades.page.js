@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import SecretaryService from "../../services/secretary.service"
-import CommissionService from "../../services/commission.service";
 
 export default class SecretaryGradesPage extends Component {
     constructor(props) {

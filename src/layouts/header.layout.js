@@ -9,7 +9,7 @@ function HeaderLayout(props) {
                     <div className="d-inline-flex align-items-center">
                         <img src="https://astanait.edu.kz/wp-content/uploads/2020/05/aitu-logo-3.png" alt="aitu logo"
                              height="20" width="40"/>
-                        <a to="/auth" className="nav-link">Astana IT University</a>
+                        <a href="https://www.astanait.edu.kz/" className="nav-link">Astana IT University</a>
                     </div>
                 </span>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
