@@ -9,27 +9,26 @@ export default class StudentTeamPage extends Component {
         this.state = {
             team: {"":""},
             members: [],
-            hasTeam: true
+            hasError: false
         }
 
     }
 
     componentDidMount() {
         StudentService.getTeam().then(res => {
-            console.log(res.data)
             if (res) {
                 this.setState({
                     team: res.data.team,
                     members: res.data.members
                 })
-            } else {
-                this.setState({
-                    hasTeam: false
-                })
             }
-            console.log(this.state.hasTeam)
         })
     };
+
+    static getDerivedStateFromError(error) {
+        // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
+        return { hasError: true };
+    }
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
@@ -46,7 +45,7 @@ export default class StudentTeamPage extends Component {
     render() {
         return (
             <div className="container">
-                {this.state.hasTeam &&
+                {this.state.hasError &&
                     <div className="card mb-5">
                         <div className="card-body">
                             <h5 className="card-title">Team: {this.state.team.name} </h5>
@@ -56,6 +55,18 @@ export default class StudentTeamPage extends Component {
                             {this.getListMembers()}
                         </div>
                     </div>
+                }
+                {!this.state.hasError &&
+                <div className="card mb-5">
+                    <div className="card-body">
+                        <h5 className="card-title">Create Team</h5>
+                        <hr/>
+                        <div className="d-flex justify-content-between">
+                            <label htmlFor="teamName" className=" card-text">Team Name:</label>
+                            <input id="teamName" className="input-field w-75" />
+                        </div>
+                    </div>
+                </div>
                 }
             </div>
         );

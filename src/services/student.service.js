@@ -23,6 +23,13 @@ class StudentService {
     sendRequestToJoinTeam(teamId) {
         return axios.post(API_URL + "teams/" + teamId + "/request", {}, { headers: authHeader() });
     }
+
+    createTeam(name, topicId, adviserId, choices) {
+        return axios.post(API_URL + "teams/create",
+            {name: name, topicId: topicId,
+                adviserId: adviserId, choices: choices},
+            { headers: authHeader() });
+    }
 }
 
 export default new StudentService();
