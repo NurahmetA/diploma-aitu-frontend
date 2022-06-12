@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import StudentService from "../../services/student.service";
-
+import CreateTeamComponent from "../../components/create-team.component";
 
 export default class StudentTeamPage extends Component {
     constructor(props) {
@@ -9,7 +9,11 @@ export default class StudentTeamPage extends Component {
         this.state = {
             team: {"":""},
             members: [],
-            hasError: false
+            hasTeam: true,
+            users: [],
+            hasRequest: true,
+            requests: [],
+            hasSentRequest: false
         }
 
     }
@@ -20,53 +24,142 @@ export default class StudentTeamPage extends Component {
                 this.setState({
                     team: res.data.team,
                     members: res.data.members
+                });
+            } else {
+                this.setState({
+                    hasTeam: false
                 })
             }
+        });
+        StudentService.getRequestToJoinTeam().then(res => {
+            if (res.data) {
+                this.setState({
+                    users: res.data
+                })
+            } else {
+                this.setState({
+                    hasRequest: false
+                })
+            }
+
         })
+        this.getSentRequests()
     };
 
-    static getDerivedStateFromError(error) {
-        // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
-        return { hasError: true };
-    }
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
             <div>
-                <p className="card-text d-flex justify-content-between">
-                    Team Member #{++index}: {member.first_name} {member.last_name} <a
-                    href={"mailto:" + member.email}>{member.email}</a>
-                </p>
+                <div className="d-flex justify-content-between">
+                    <h5 className="card-text d-flex justify-content-between text-muted">
+                        Team Member #{++index}: {member.first_name} {member.last_name} <a
+                        href={"mailto:" + member.email}>{member.email}</a>
+                    </h5>
+                    <button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>
+                </div>
                 <hr/>
             </div>
         ));
 
+    deleteMember(memberId) {
+        StudentService.deleteMemberFromTeam(memberId).then(res => {
+            if (res) window.location.reload();
+        })
+    }
+
+    getRequests = () =>
+        this.state.users.map((user, index) => (
+            <div>
+                <div className="d-flex justify-content-between align-content-center">
+                    <div>
+                        <h5 className="card-title">Request #{++index}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">Student: {user.user.last_name} {user.user.first_name}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">Email: {user.user.email ? user.user.email : "Not given"}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">Attesstate: {user.user.isHonor ? "red" : "blue"}</h6>
+                    </div>
+                    <button className="btn btn-outline-primary h-50 align-self-center"
+                            onClick={() => this.acceptRequestToJoin(user.id)}>Accept</button>
+                </div>
+                <hr/>
+            </div>
+        ));
+
+    acceptRequestToJoin(requestId) {
+        StudentService.acceptRequestToJoin(requestId).then(res => {
+            if (res) window.location.reload();
+        })
+    }
+
+    hasTopicAndAdviser() {
+        let hasTopic = !!this.state.team.topic;
+        let hasAdviser = !!this.state.team.adviser;
+
+        return (
+            <div>
+                {hasTopic && <h6 className="card-title mb-2 ">Project Topic: {this.state.team.topic} </h6>}
+                {hasAdviser && <h6 className="card-title mb-2 ">Team Adviser: {this.state.team.adviser} </h6>}
+                {hasAdviser || hasTopic && <hr/>}
+            </div>
+        );
+    }
+
+    getSentRequests() {
+        StudentService.getSentRequest().then(res => {
+            console.log(res.data);
+            if(res) {
+                this.setState({
+                    requests: res.data
+                });
+            } else {
+                this.setState({
+                    hasSentRequest: false
+                })
+            }
+        })
+    }
+
+    listSentRequests = () =>
+        <div>
+
+        </div>
 
     render() {
         return (
             <div className="container">
-                {this.state.hasError &&
-                    <div className="card mb-5">
+                <h2>Team</h2>
+                {this.state.hasTeam &&
+                    <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">Team: {this.state.team.name} </h5>
-                            <h6 className="card-subtitle mb-2 text-muted">Project Topic: {this.state.team.topic} </h6>
-                            <h6 className="card-subtitle mb-2 text-muted">Team Adviser: {this.state.team.adviser} </h6>
-                            <hr/>
+                            {this.hasTopicAndAdviser()}
                             {this.getListMembers()}
                         </div>
                     </div>
                 }
-                {!this.state.hasError &&
+                {!this.state.hasTeam &&
                 <div className="card mb-5">
                     <div className="card-body">
-                        <h5 className="card-title">Create Team</h5>
-                        <hr/>
-                        <div className="d-flex justify-content-between">
-                            <label htmlFor="teamName" className=" card-text">Team Name:</label>
-                            <input id="teamName" className="input-field w-75" />
-                        </div>
+                        <CreateTeamComponent/>
                     </div>
                 </div>
+                }
+                {!this.state.hasTeam &&
+                <div className="card mb-5">
+                    <div className="card-body">
+                        <h1>My Request</h1>
+                    </div>
+                </div>
+                }
+                {this.state.hasRequest &&
+                    <div>
+                        <h2>Requests</h2>
+                        <div className="card ">
+                            <div className="card-body">
+                                <div className="card-body">
+                                    {this.getRequests()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
         );

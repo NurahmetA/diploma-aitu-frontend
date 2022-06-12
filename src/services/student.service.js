@@ -9,7 +9,9 @@ class StudentService {
     }
 
     getTeam() {
-        return axios.get(API_URL + "team", { headers: authHeader() });
+        return axios.get(API_URL + "team", { headers: authHeader() }).catch(() => {
+            return false;
+        });
     }
 
     getTopics() {
@@ -24,11 +26,28 @@ class StudentService {
         return axios.post(API_URL + "teams/" + teamId + "/request", {}, { headers: authHeader() });
     }
 
-    createTeam(name, topicId, adviserId, choices) {
-        return axios.post(API_URL + "teams/create",
-            {name: name, topicId: topicId,
-                adviserId: adviserId, choices: choices},
-            { headers: authHeader() });
+    createTeam(name) {
+        return axios.post(API_URL + "teams/create", {name: name}, { headers: authHeader() });
+    }
+
+    getRequestToJoinTeam() {
+        return axios.get(API_URL + "teams/request",  { headers: authHeader() }).catch(() => {
+            return false;
+        });
+    }
+
+    acceptRequestToJoin(requestId) {
+        return axios.post(API_URL + "teams/request/" + requestId + "/accept", {}, { headers: authHeader() });
+    }
+
+    deleteMemberFromTeam(memberId) {
+        return axios.delete(API_URL + "team/" + memberId + "/removeMember", { headers: authHeader() });
+    }
+
+    getSentRequest() {
+        return axios.get(API_URL + "teams/request/check",  { headers: authHeader() }).catch(() => {
+            return false;
+        });
     }
 }
 
