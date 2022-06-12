@@ -60,16 +60,31 @@ export default class CommissionDashboardPage extends Component {
             <div className="d-flex justify-content-between">
                 <div>{question.responderName}</div>
                 <div>{++index + ". " + question.description}</div>
-                <button className="btn btn-outline-danger"
-                        onClick={() => this.editQuestion(question.questionId, question.description, question.responderName)}>Edit</button>
+                <div className="d-flex">
+                    <button className="btn btn-outline-danger m-1"
+                            onClick={() => this.editQuestion(question.questionId, question.description, question.responderName)}>Edit</button>
+
+                    <button className="btn btn-outline-danger m-1"
+                            onClick={() => this.deleteQuestion(question.questionId)}>Delete</button>
+                </div>
             </div>
         ));
 
-    editQuestion(questionId, description, responderName) {
-        let desc = prompt("You are editing question for" + responderName, description);
-        CommissionService.updateQuestion(questionId, desc).then(res => {
+    deleteQuestion(questionId) {
+        CommissionService.deleteQuestion(questionId).then(res => {
             window.location.reload();
         })
+    }
+
+    editQuestion(questionId, description, responderName) {
+        let desc = prompt("You are editing question for" + responderName, description);
+        if (desc) {
+            CommissionService.updateQuestion(questionId, desc).then(res => {
+                window.location.reload();
+            })
+        } else {
+            alert("Question can not be empty")
+        }
     }
 
     render() {
