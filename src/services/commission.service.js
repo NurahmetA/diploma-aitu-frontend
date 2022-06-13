@@ -31,6 +31,10 @@ class CommissionService {
     updateQuestion(questionId, question) {
         return axios.put(API_URL + questionId + "/question/update", { description: question }, { headers: authHeader() })
     }
+
+    deleteQuestion(questionId) {
+        return axios.delete(API_URL + questionId + "/question/delete", { headers: authHeader() });
+    }
 }
 
 export default new CommissionService();

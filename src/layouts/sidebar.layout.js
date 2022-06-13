@@ -12,7 +12,6 @@ function SidebarLayout(props) {
                 </a>
             </h1>
             <ul className="list-unstyled components mb-5">
-
                 {props.isStudent &&
                     <div>
                         <li className="nav-item active">
@@ -43,8 +42,6 @@ function SidebarLayout(props) {
                         </li>
                     </div>
                 }
-
-
             </ul>
             <div className="footer">
                 <p>Copyright</p>

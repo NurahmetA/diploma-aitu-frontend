@@ -1,33 +1,11 @@
-/*
-import './App.css';
-import SidebarLayout from "./layouts/sidebar.layout";
-import MainContentLayout from "./layouts/main-content.layout";
-import authService from "./services/auth.service";
-import {useState} from "@types/react";
-
-function App() {
-    const user = authService.getCurrentUser();
-    const [isLogin, setIsLogin] = useState(true);
-    if (user) {
-
-    }
-    return (
-        <div className="wrapper d-flex align-items-stretch">
-            <SidebarLayout></SidebarLayout>
-            <MainContentLayout></MainContentLayout>
-        </div>
-    );
-}
-
-export default App;
-*/
-
 import './App.css';
 import {Component} from "react";
 import AuthService from "./services/auth.service";
 import SidebarLayout from "./layouts/sidebar.layout";
 import MainContentLayout from "./layouts/main-content.layout";
 import LoginPage from "./pages/common/login.page";
+
+export const BASE_URL = 'http://localhost:8080';
 
 class App extends Component {
     constructor(props) {
@@ -49,7 +27,7 @@ class App extends Component {
         if (user) {
             this.setState({
                 currentUser: user,
-                showStudentBoard: user.role.includes("ROLE_USER"),
+                showStudentBoard: user.role.includes("ROLE_STUDENT"),
                 showProfessorBoard: user.role.includes("ROLE_PROFESSOR"),
                 showCommissionBoard: user.role.includes("ROLE_COMMISSION"),
                 showAdminBoard: user.role.includes("ROLE_ADMIN"),
@@ -92,11 +70,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
-            <div className="wrapper d-flex align-items-stretch">
-                <LoginPage/>
-            </div>
-{this.state.isGuestAccount && <LoginPage/>}
-
- */

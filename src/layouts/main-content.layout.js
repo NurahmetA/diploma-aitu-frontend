@@ -15,8 +15,8 @@ import SecretaryDocumentsPage from "../pages/secretary/documents.page";
 import SecretaryDocumentPage from "../pages/secretary/document.page";
 import CommissionGradesPage from "../pages/commission-pages/grades.page";
 import SecretaryGradesPage from "../pages/secretary/grades.page";
-//import SecretaryDocumentsPage from "../pages/secretary/documents.page";
-//import SecretaryDocumentPage from "../pages/secretary/document.page";
+import StudentDashboard from "../pages/student-pages/dashboard.page";
+import StudentTeamPage from "../pages/student-pages/team.page";
 
 function MainContentLayout(props) {
     return (
@@ -38,6 +38,10 @@ function MainContentLayout(props) {
                 <Route path="/secretary/defence/grades/:id" element={<SecretaryGradesPage/>}/>
                 <Route path="/secretary/documents" element={<SecretaryDocumentsPage/>}/>
                 <Route path="/secretary/documents/:id" element={<SecretaryDocumentPage/>}/>
+                <Route path="/student/dashboard" element={<StudentDashboard/>}/>
+                <Route path="/student/team" element={<StudentTeamPage/>}/>
+                <Route path="/student/dashboard" element={<StudentDashboard/>}/>
+                <Route path="/student/dashboard" element={<StudentDashboard/>}/>
             </Routes>
         </div>
     );
