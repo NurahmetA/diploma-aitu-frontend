@@ -5,7 +5,7 @@ import SidebarLayout from "./layouts/sidebar.layout";
 import MainContentLayout from "./layouts/main-content.layout";
 import LoginPage from "./pages/common/login.page";
 
-export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = 'https://diploma-aitu-backend.herokuapp.com/';
 
 class App extends Component {
     constructor(props) {

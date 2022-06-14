@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/auth/";
+const API_URL = "https://diploma-aitu-backend.herokuapp.com/auth/";
 
 class AuthService {
     login(username, password) {
@@ -39,7 +39,7 @@ class AuthService {
             username,
             password
         }).then(response => {
-            window.location.assign("http://localhost:3000/auth");
+            window.location.assign("https://diploma-aitu-frontend.herokuapp.com/auth");
             return response.data;
         });
     }
