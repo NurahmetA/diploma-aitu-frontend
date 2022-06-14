@@ -2408,6 +2408,30 @@ fieldset:disabled a.btn {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5); }
 
+.btn-outline-edit {
+  color: #ee9f2d;
+  border-color: #ee9f2d; }
+.btn-outline-edit:hover {
+  color: #fff;
+  background-color: #ee9f2d;
+  border-color: #ee9f2d; }
+.btn-outline-edit:focus, .btn-outline-edit.focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgb(238, 159, 45);
+  box-shadow: 0 0 0 0.2rem rgb(238, 159, 45); }
+.btn-outline-edit.disabled, .btn-outline-edit:disabled {
+  color: #ee9f2d;
+  background-color: transparent; }
+.btn-outline-edit:not(:disabled):not(.disabled):active, .btn-outline-edit:not(:disabled):not(.disabled).active,
+.show > .btn-outline-edit.dropdown-toggle {
+  color: #fff;
+  background-color: #ee9f2d;
+  border-color: #ee9f2d; }
+.btn-outline-edit:not(:disabled):not(.disabled):active:focus, .btn-outline-edit:not(:disabled):not(.disabled).active:focus,
+.show > .btn-outline-edit.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgb(238, 159, 45);
+  box-shadow: 0 0 0 0.2rem rgb(238, 159, 45); }
+
+
 .btn-outline-light {
   color: #f8f9fa;
   border-color: #f8f9fa; }
@@ -8367,3 +8391,9 @@ a[data-toggle="collapse"] {
 .team-card > .list-group:last-child .list-group-item:last-child {
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem; }
+.accepted {
+  background-color: greenyellow;
+}
+.not-accepted {
+  background-color: #dc3545;
+}

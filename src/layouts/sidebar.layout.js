@@ -6,7 +6,7 @@ function SidebarLayout(props) {
              className={props.isStudent ? "sidebar-student active" :
                  props.isCommission ? "sidebar-commission active" : "sidebar-professor active"}>
             <h1>
-                <a href="index.html" className="logo">
+                <a href="https://astanait.edu.kz/" className="logo">
                     <img src="https://astanait.edu.kz/wp-content/uploads/2020/05/aitu-logo-3.png" alt="aitu logo"
                          width="140"/>
                 </a>
@@ -32,7 +32,7 @@ function SidebarLayout(props) {
                     <div>
                         <li className="nav-item active">
                             <Link to="/secretary" className="nav-a">
-                                <i className="fa fa-image"></i> Dashboard
+                                <i className="fa fa-image">Dashboard</i>
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -41,6 +41,25 @@ function SidebarLayout(props) {
                             </Link>
                         </li>
                     </div>
+                }
+                {props.isAdviser &&
+                <div>
+                    <li className="nav-item active">
+                        <Link to="/adviser/dashboard" className="nav-a">
+                            <i className="fa fa-image"></i> Dashboard
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/adviser/topic" className="nav-a">
+                            <i className="fa fa-file-archive-o"></i> Topic
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/adviser/documents" className="nav-a">
+                            <i className="fa fa-file-archive-o"></i> Documents
+                        </Link>
+                    </li>
+                </div>
                 }
             </ul>
             <div className="footer">

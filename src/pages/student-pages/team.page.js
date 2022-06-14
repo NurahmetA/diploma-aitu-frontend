@@ -13,7 +13,7 @@ export default class StudentTeamPage extends Component {
             users: [],
             hasRequest: true,
             requests: [],
-            hasSentRequest: false
+            hasSentRequest: true
         }
 
     }
@@ -41,9 +41,18 @@ export default class StudentTeamPage extends Component {
                     hasRequest: false
                 })
             }
-
         })
-        this.getSentRequests()
+        StudentService.getSentRequest().then(res => {
+            if(res) {
+                this.setState({
+                    requests: res.data
+                });
+            } else {
+                this.setState({
+                    hasSentRequest: false
+                })
+            }
+        })
     };
 
 
@@ -55,7 +64,7 @@ export default class StudentTeamPage extends Component {
                         Team Member #{++index}: {member.first_name} {member.last_name} <a
                         href={"mailto:" + member.email}>{member.email}</a>
                     </h5>
-                    <button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>
+                    {/*<button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>*/}
                 </div>
                 <hr/>
             </div>
@@ -91,6 +100,8 @@ export default class StudentTeamPage extends Component {
     }
 
     hasTopicAndAdviser() {
+        console.log(this.state.team.topic);
+        console.log(this.state.team.adviser);
         let hasTopic = !!this.state.team.topic;
         let hasAdviser = !!this.state.team.adviser;
 
@@ -98,30 +109,20 @@ export default class StudentTeamPage extends Component {
             <div>
                 {hasTopic && <h6 className="card-title mb-2 ">Project Topic: {this.state.team.topic} </h6>}
                 {hasAdviser && <h6 className="card-title mb-2 ">Team Adviser: {this.state.team.adviser} </h6>}
-                {hasAdviser || hasTopic && <hr/>}
             </div>
         );
     }
 
-    getSentRequests() {
-        StudentService.getSentRequest().then(res => {
-            console.log(res.data);
-            if(res) {
-                this.setState({
-                    requests: res.data
-                });
-            } else {
-                this.setState({
-                    hasSentRequest: false
-                })
-            }
-        })
-    }
-
     listSentRequests = () =>
-        <div>
-
-        </div>
+        this.state.requests.map((request, index) => (
+            <div className={request.request.accepted ? "accepted" : "not-accepted"}>
+                <h5 className="card-title">Request #{++index}</h5>
+                <div className={"d-flex justify-content-between align-content-center "}>
+                    <h6 className="card-subtitle mb-2 text-muted">Team: {request.team.name}</h6>
+                </div>
+                <hr/>
+            </div>
+        ));
 
     render() {
         return (
@@ -142,14 +143,19 @@ export default class StudentTeamPage extends Component {
                     </div>
                 </div>
                 }
-                {!this.state.hasTeam &&
-                <div className="card mb-5">
-                    <div className="card-body">
-                        <h1>My Request</h1>
+                {!this.state.hasTeam && this.state.hasSentRequest &&
+                <div>
+                    <h2>My Requests</h2>
+                    <div className="card ">
+                        <div className="card-body">
+                            <div className="card-body">
+                                {this.listSentRequests()}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 }
-                {this.state.hasRequest &&
+                {this.state.hasRequest && this.state.hasTeam &&
                     <div>
                         <h2>Requests</h2>
                         <div className="card ">
