@@ -16,8 +16,8 @@ class AdviserService {
         return axios.post(API_URL + "topics/create", { name: name }, { headers: authHeader() });
     }
 
-    updateTopic(name) {
-        return axios.put(API_URL + "topics/update", { name: name }, { headers: authHeader() });
+    updateTopic(id, name) {
+        return axios.put(API_URL + "topics/update", { id: id, name: name }, { headers: authHeader() });
     }
 
     getTopic(id) {

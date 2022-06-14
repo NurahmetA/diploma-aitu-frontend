@@ -4,7 +4,7 @@ function SidebarLayout(props) {
     return (
         <nav id="sidebar"
              className={props.isStudent ? "sidebar-student active" :
-                 props.isCommission ? "sidebar-commission active" : "sidebar-professor active"}>
+                 props.isAdmin ? "sidebar-commission active" : "sidebar-professor active"}>
             <h1>
                 <a href="https://astanait.edu.kz/" className="logo">
                     <img src="https://astanait.edu.kz/wp-content/uploads/2020/05/aitu-logo-3.png" alt="aitu logo"
@@ -46,6 +46,25 @@ function SidebarLayout(props) {
                 <div>
                     <li className="nav-item active">
                         <Link to="/adviser/dashboard" className="nav-a">
+                            <i className="fa fa-image"></i> Dashboard
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/adviser/topic" className="nav-a">
+                            <i className="fa fa-file-archive-o"></i> Topic
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/adviser/documents" className="nav-a">
+                            <i className="fa fa-file-archive-o"></i> Documents
+                        </Link>
+                    </li>
+                </div>
+                }
+                {props.isAdmin &&
+                <div>
+                    <li className="nav-item active">
+                        <Link to="/admin/dashboard" className="nav-a">
                             <i className="fa fa-image"></i> Dashboard
                         </Link>
                     </li>

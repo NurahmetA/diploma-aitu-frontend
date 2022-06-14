@@ -51,10 +51,11 @@ class App extends Component {
                 }
                 {!this.state.isGuestAccount &&
                     <div className="wrapper d-flex align-items-stretch">
-                        {!this.state.showAdminBoard && !this.state.showCommissionBoard &&
+                        {!this.state.showCommissionBoard &&
                             <SidebarLayout isStudent={this.state.showStudentBoard}
                                            isAdviser={this.state.showAdviserBoard}
-                                           isSecretary={this.state.showSecretaryBoard}/>
+                                           isSecretary={this.state.showSecretaryBoard}
+                                           isAdmin={this.state.showAdminBoard}/>
                         }
                         <MainContentLayout isStudent={this.state.showStudentBoard}
                                            isAdviser={this.state.showAdviserBoard}

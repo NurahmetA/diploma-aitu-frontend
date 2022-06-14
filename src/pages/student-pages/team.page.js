@@ -115,12 +115,13 @@ export default class StudentTeamPage extends Component {
 
     hasTopicAndAdviser() {
         let hasTopic = !!this.state.team.topic;
-        let hasAdviser = !!this.state.team.adviser;
+        let hasAdviser = !!this.state.team.advisor;
 
         return (
             <div>
-                {hasTopic && <h6 className="card-title mb-2 ">Project Topic: {this.state.team.topic} </h6>}
-                {hasAdviser && <h6 className="card-title mb-2 ">Team Adviser: {this.state.team.adviser} </h6>}
+                {hasTopic && <h5 className="card-title mb-2 ">Project Topic: {this.state.team.topic} </h5>}
+                {hasAdviser && <h5 className="card-title mb-2 ">Team Adviser: {this.state.team.advisor} </h5>}
+                {hasAdviser && <hr/>}
             </div>
         );
     }
@@ -137,7 +138,6 @@ export default class StudentTeamPage extends Component {
         ));
 
     render() {
-        console.log("MEMBER " + this.state.isMember)
         return (
             <div className="container">
                 <h2>Team</h2>

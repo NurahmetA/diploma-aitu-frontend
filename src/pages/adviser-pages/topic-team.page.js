@@ -44,6 +44,17 @@ export default class TopicTeamPage extends Component {
         })
     }
 
+    editTopic(id) {
+        let topic = prompt("Write down your topic please");
+        if (topic) {
+            AdviserService.updateTopic(id, topic).then(res => {
+                if (res) window.location.reload()
+            });
+        } else {
+            alert("Please write down mark from 0 to 100")
+        }
+    }
+
 
     render() {
         return (
@@ -57,10 +68,7 @@ export default class TopicTeamPage extends Component {
                 </div>
                 <div className="row d-flex justify-content-center">
                     <button type="button" className="btn btn-outline-edit mt-5 mr-1"
-                            onClick={()=> window.location.pathname ="commission/dashboard"}>Edit Topic </button>
-
-                    <button type="button" className="btn btn-outline-danger mt-5"
-                            onClick={()=> this.deleteTopic(this.id)}> Delete Topic</button>
+                            onClick={()=> this.editTopic(this.id)}>Edit Topic </button>
                 </div>
             </div>
         );
