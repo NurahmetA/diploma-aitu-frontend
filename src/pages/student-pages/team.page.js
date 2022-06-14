@@ -12,7 +12,8 @@ export default class StudentTeamPage extends Component {
             users: [],
             requests: [],
             isCreator: false,
-            isMember: false
+            isMember: false,
+            creatorId: ""
         }
 
     }
@@ -55,7 +56,8 @@ export default class StudentTeamPage extends Component {
             if (res) {
                 this.setState({
                     team: res.data.team,
-                    members: res.data.members
+                    members: res.data.members,
+                    creatorId: res.data.creatorId
                 });
             }
         });
@@ -68,6 +70,12 @@ export default class StudentTeamPage extends Component {
         });
     }
 
+    displayDeleteButton(userId) {
+        if (this.state.creatorId !== userId) {
+            return <button className="btn btn-outline-danger" onClick={() => this.deleteMember(userId)}>Delete</button>
+        }
+    }
+
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
@@ -78,7 +86,7 @@ export default class StudentTeamPage extends Component {
                         href={"mailto:" + member.email}>{member.email}</a>
                     </h5>
                     {this.state.isCreator &&
-                        <button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>
+                        this.displayDeleteButton(member.id)
                     }
                 </div>
                 <hr/>
@@ -168,7 +176,7 @@ export default class StudentTeamPage extends Component {
                     </div>
                 </div>
                 }
-                {this.state.isCreator &&
+                {this.state.isCreator && (this.state.users.length !== 0) &&
                     <div>
                         <h2>Requests</h2>
                         <div className="card ">
