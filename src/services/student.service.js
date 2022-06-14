@@ -4,14 +4,17 @@ import {authHeader} from "./auth.service";
 const API_URL = 'http://localhost:8080/student/';
 
 class StudentService {
+
+    checkStatus() {
+        return axios.get(API_URL + "status", { headers: authHeader() });
+    }
+
     getTeams() {
         return axios.get(API_URL + "teams", { headers: authHeader() });
     }
 
     getTeam() {
-        return axios.get(API_URL + "team", { headers: authHeader() }).catch(() => {
-            return false;
-        });
+        return axios.get(API_URL + "team", { headers: authHeader() });
     }
 
     getTopics() {
@@ -31,9 +34,7 @@ class StudentService {
     }
 
     getRequestToJoinTeam() {
-        return axios.get(API_URL + "teams/request",  { headers: authHeader() }).catch(() => {
-            return false;
-        });
+        return axios.get(API_URL + "teams/request",  { headers: authHeader() });
     }
 
     acceptRequestToJoin(requestId) {
@@ -45,9 +46,7 @@ class StudentService {
     }
 
     getSentRequest() {
-        return axios.get(API_URL + "teams/request/check",  { headers: authHeader() }).catch(() => {
-            return false;
-        });
+        return axios.get(API_URL + "teams/request/check",  { headers: authHeader() });
     }
 }
 

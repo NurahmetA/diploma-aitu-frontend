@@ -6,7 +6,8 @@ export default class StudentDashboardPage extends Component {
         super(props);
 
         this.state = {
-            teams: []
+            teams: [],
+            isMember: false
         }
 
     }
@@ -16,8 +17,17 @@ export default class StudentDashboardPage extends Component {
             this.setState({
                 teams: res.data
             })
-        })
+        });
+        if (this.state.teams) this.hasTeam();
     };
+
+    hasTeam() {
+        StudentService.checkStatus().then(res => {
+            this.setState({
+                isMember: res.data.isTeamMember
+            })
+        });
+    }
 
     listTeams = () =>
         this.state.teams.map((team, index) => (
@@ -28,7 +38,9 @@ export default class StudentDashboardPage extends Component {
                         <h6 className="card-subtitle mb-2 text-muted">Topic: {team.topic}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Advisor: {team.advisor}</h6>
                     </div>
-                    <button className="btn btn-outline-success h-50" onClick={() => this.sendRequestToJoin(team.id)}>Join</button>
+                    {this.state.isMember &&
+                        <button className="btn btn-outline-success h-50" onClick={() => this.sendRequestToJoin(team.id)}>Join</button>
+                    }
                 </div>
             </div>
         ));

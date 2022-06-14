@@ -9,26 +9,54 @@ export default class StudentTeamPage extends Component {
         this.state = {
             team: {"":""},
             members: [],
-            hasTeam: true,
             users: [],
-            hasRequest: true,
             requests: [],
-            hasSentRequest: true
+            isCreator: false,
+            isMember: false
         }
 
     }
 
     componentDidMount() {
+        StudentService.checkStatus().then(res => {
+            this.setState({
+                isCreator: res.data.isTeamCreator,
+                isMember: res.data.isTeamMember
+            });
+            if (res.data.isTeamCreator) {
+                this.teamInfo();
+            } else if (res.data.isTeamMember) {
+                this.requestInfo();
+            } else {
+                StudentService.getSentRequest().then(res => {
+                    if(res) {
+                        this.setState({
+                            requests: res.data
+                        });
+                    }
+                })
+            }
+        });
+    };
+
+    requestInfo() {
         StudentService.getTeam().then(res => {
             if (res) {
                 this.setState({
                     team: res.data.team,
                     members: res.data.members
                 });
-            } else {
+            }
+        });
+    }
+
+    teamInfo() {
+        StudentService.getTeam().then(res => {
+            if (res) {
                 this.setState({
-                    hasTeam: false
-                })
+                    team: res.data.team,
+                    members: res.data.members
+                });
             }
         });
         StudentService.getRequestToJoinTeam().then(res => {
@@ -36,24 +64,9 @@ export default class StudentTeamPage extends Component {
                 this.setState({
                     users: res.data
                 })
-            } else {
-                this.setState({
-                    hasRequest: false
-                })
             }
-        })
-        StudentService.getSentRequest().then(res => {
-            if(res) {
-                this.setState({
-                    requests: res.data
-                });
-            } else {
-                this.setState({
-                    hasSentRequest: false
-                })
-            }
-        })
-    };
+        });
+    }
 
 
     getListMembers = () =>
@@ -64,7 +77,9 @@ export default class StudentTeamPage extends Component {
                         Team Member #{++index}: {member.first_name} {member.last_name} <a
                         href={"mailto:" + member.email}>{member.email}</a>
                     </h5>
-                    {/*<button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>*/}
+                    {this.state.isTeamCreator &&
+                        <button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>
+                    }
                 </div>
                 <hr/>
             </div>
@@ -100,8 +115,6 @@ export default class StudentTeamPage extends Component {
     }
 
     hasTopicAndAdviser() {
-        console.log(this.state.team.topic);
-        console.log(this.state.team.adviser);
         let hasTopic = !!this.state.team.topic;
         let hasAdviser = !!this.state.team.adviser;
 
@@ -128,7 +141,7 @@ export default class StudentTeamPage extends Component {
         return (
             <div className="container">
                 <h2>Team</h2>
-                {this.state.hasTeam &&
+                {this.state.isMember &&
                     <div className="card">
                         <div className="card-body">
                             {this.hasTopicAndAdviser()}
@@ -136,14 +149,14 @@ export default class StudentTeamPage extends Component {
                         </div>
                     </div>
                 }
-                {!this.state.hasTeam &&
+                {!this.state.isCreator && !this.state.isMember &&
                 <div className="card mb-5">
                     <div className="card-body">
                         <CreateTeamComponent/>
                     </div>
                 </div>
                 }
-                {!this.state.hasTeam && this.state.hasSentRequest &&
+                {!this.state.isCreator && !this.state.isMember &&
                 <div>
                     <h2>My Requests</h2>
                     <div className="card ">
@@ -155,7 +168,7 @@ export default class StudentTeamPage extends Component {
                     </div>
                 </div>
                 }
-                {this.state.hasRequest && this.state.hasTeam &&
+                {this.state.isCreator &&
                     <div>
                         <h2>Requests</h2>
                         <div className="card ">
