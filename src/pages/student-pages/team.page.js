@@ -77,7 +77,7 @@ export default class StudentTeamPage extends Component {
                         Team Member #{++index}: {member.first_name} {member.last_name} <a
                         href={"mailto:" + member.email}>{member.email}</a>
                     </h5>
-                    {this.state.isTeamCreator &&
+                    {this.state.isCreator &&
                         <button className="btn btn-outline-danger" onClick={() => this.deleteMember(member.id)}>Delete</button>
                     }
                 </div>
@@ -99,7 +99,6 @@ export default class StudentTeamPage extends Component {
                         <h5 className="card-title">Request #{++index}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">Student: {user.user.last_name} {user.user.first_name}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Email: {user.user.email ? user.user.email : "Not given"}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Attesstate: {user.user.isHonor ? "red" : "blue"}</h6>
                     </div>
                     <button className="btn btn-outline-primary h-50 align-self-center"
                             onClick={() => this.acceptRequestToJoin(user.id)}>Accept</button>
@@ -138,6 +137,7 @@ export default class StudentTeamPage extends Component {
         ));
 
     render() {
+        console.log("MEMBER " + this.state.isMember)
         return (
             <div className="container">
                 <h2>Team</h2>

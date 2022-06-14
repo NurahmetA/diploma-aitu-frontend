@@ -6,7 +6,8 @@ export default class StudentTopicPage extends Component {
         super(props);
 
         this.state = {
-            topics: []
+            topics: [],
+            isCreator: false
         }
 
     }
@@ -17,7 +18,16 @@ export default class StudentTopicPage extends Component {
                 topics: res.data
             })
         })
+        this.selectTopic();
     };
+
+    selectTopic() {
+        StudentService.checkStatus().then(res => {
+            this.setState({
+                isCreator: res.data.isTeamCreator
+            })
+        })
+    }
 
     listTopics = () =>
         this.state.topics.map((topic, index) => (
@@ -27,7 +37,9 @@ export default class StudentTopicPage extends Component {
                         <h5 className="card-title">{++index}. Project Topic: {topic.topicName} </h5>
                         <h6 className="card-subtitle mb-2 text-muted">Advisor: {topic.advisor}</h6>
                     </div>
-                    <button className="btn btn-outline-success" onClick={() => this.sendRequestForTopic(topic.id)}>Apply</button>
+                    {this.state.isCreator &&
+                        <button className="btn btn-outline-success" onClick={() => this.sendRequestForTopic(topic.id)}>Apply</button>
+                    }
                 </div>
             </div>
         ));

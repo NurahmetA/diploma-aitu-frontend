@@ -18,7 +18,7 @@ export default class StudentDashboardPage extends Component {
                 teams: res.data
             })
         });
-        if (this.state.teams) this.hasTeam();
+        this.hasTeam();
     };
 
     hasTeam() {
@@ -38,7 +38,7 @@ export default class StudentDashboardPage extends Component {
                         <h6 className="card-subtitle mb-2 text-muted">Topic: {team.topic}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Advisor: {team.advisor}</h6>
                     </div>
-                    {this.state.isMember &&
+                    {!this.state.isMember &&
                         <button className="btn btn-outline-success h-50" onClick={() => this.sendRequestToJoin(team.id)}>Join</button>
                     }
                 </div>
