@@ -38,6 +38,13 @@ class SecretaryService {
         return axios.get(API_URL + "defence/" + defenceId + "/commissions", { headers: authHeader() })
     }
 
+    updateQuestion(defenceId, questionId, desc) {
+        return axios.put(API_URL + defenceId + "/question/update", {id: questionId, description: desc}, {  headers: authHeader() });
+    }
+
+    deleteQuestion(defenceId, questionId) {
+        return axios.delete(API_URL + defenceId + "/question/" + questionId, {  headers: authHeader() });
+    }
 
 }
 
