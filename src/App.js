@@ -13,7 +13,7 @@ class App extends Component {
 
         this.state = {
             showStudentBoard: false,
-            showProfessorBoard: false,
+            showAdviserBoard: false,
             showCommissionBoard: false,
             showSecretaryBoard: false,
             showAdminBoard: false,
@@ -28,7 +28,7 @@ class App extends Component {
             this.setState({
                 currentUser: user,
                 showStudentBoard: user.role.includes("ROLE_STUDENT"),
-                showProfessorBoard: user.role.includes("ROLE_PROFESSOR"),
+                showAdviserBoard: user.role.includes("ROLE_ADVISOR"),
                 showCommissionBoard: user.role.includes("ROLE_COMMISSION"),
                 showAdminBoard: user.role.includes("ROLE_ADMIN"),
                 showSecretaryBoard: user.role.includes("ROLE_SECRETARY")
@@ -51,13 +51,14 @@ class App extends Component {
                 }
                 {!this.state.isGuestAccount &&
                     <div className="wrapper d-flex align-items-stretch">
-                        {!this.state.showAdminBoard && !this.state.showCommissionBoard &&
+                        {!this.state.showCommissionBoard &&
                             <SidebarLayout isStudent={this.state.showStudentBoard}
-                                           isProffessor={this.state.showProfessorBoard}
-                                           isSecretary={this.state.showSecretaryBoard}/>
+                                           isAdviser={this.state.showAdviserBoard}
+                                           isSecretary={this.state.showSecretaryBoard}
+                                           isAdmin={this.state.showAdminBoard}/>
                         }
                         <MainContentLayout isStudent={this.state.showStudentBoard}
-                                           isProffessor={this.state.showProfessorBoard}
+                                           isAdviser={this.state.showAdviserBoard}
                                            isCommission={this.state.showCommissionBoard}
                                            isAdmin={this.state.showAdminBoard}
                                            isSecretary={this.state.showSecretaryBoard}/>

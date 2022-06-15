@@ -61,7 +61,7 @@ export default class CommissionDashboardPage extends Component {
                 <div>{question.responderName}</div>
                 <div>{++index + ". " + question.description}</div>
                 <div className="d-flex">
-                    <button className="btn btn-outline-danger m-1"
+                    <button className="btn btn-outline-edit m-1"
                             onClick={() => this.editQuestion(question.questionId, question.description, question.responderName)}>Edit</button>
 
                     <button className="btn btn-outline-danger m-1"
@@ -70,14 +70,14 @@ export default class CommissionDashboardPage extends Component {
             </div>
         ));
 
-    deleteQuestion(questionId) {
-        CommissionService.deleteQuestion(questionId).then(res => {
-            window.location.reload();
+    deleteQuestion(id) {
+        CommissionService.deleteQuestion(id).then(res => {
+            if (res) window.location.reload();
         })
     }
 
     editQuestion(questionId, description, responderName) {
-        let desc = prompt("You are editing question for" + responderName, description);
+        let desc = prompt("You are editing question for " + responderName, description);
         if (desc) {
             CommissionService.updateQuestion(questionId, desc).then(res => {
                 window.location.reload();
