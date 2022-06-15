@@ -75,8 +75,33 @@ export default class SecretaryDefencePage extends Component {
                 <td>
                     {question.questioner}
                 </td>
+                <td>
+                    <button class="btn btn-outline-edit" onClick={() => this.editCommissionQuestion(question.questionId, question.description)}>Edit</button>
+                </td>
+                <td>
+                    <button className="btn btn-outline-danger"
+                            onClick={() => this.deleteCommissionQuestion(question.questionId)}>delete
+                    </button>
+                </td>
             </tr>
         ));
+
+    deleteCommissionQuestion(questionId) {
+        SecretaryService.deleteQuestion(this.id, questionId).then(res => {
+           if (res) window.location.reload();
+        });
+    }
+
+    editCommissionQuestion(questionId, description) {
+        let desc = prompt("You are editing question" , description);
+        if (desc) {
+            SecretaryService.updateQuestion(this.id, questionId, desc).then(res => {
+                window.location.reload();
+            })
+        } else {
+            alert("Question can not be empty")
+        }
+    }
 
     getListMembers = () =>
         this.state.members.map((member, index) => (
@@ -168,6 +193,7 @@ export default class SecretaryDefencePage extends Component {
                         <th scope="col">Student</th>
                         <th scope="col">Question</th>
                         <th scope="col">Questioner</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
