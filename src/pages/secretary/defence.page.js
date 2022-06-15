@@ -106,9 +106,8 @@ export default class SecretaryDefencePage extends Component {
     getListMembers = () =>
         this.state.members.map((member, index) => (
             <div>
-                <p className="card-text d-flex justify-content-between onTeamHover">
-                    Team Member #{++index}: {member.first_name} {member.last_name} <a
-                    href={"mailto:" + member.email}>{member.email}</a>
+                <p className={member.isHonor ? "card-text isHonor" : "card-text"}>
+                    Team Member #{++index}: {member.first_name} {member.last_name}
                 </p>
                 <hr/>
             </div>
