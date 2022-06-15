@@ -82,8 +82,7 @@ export default class StudentTeamPage extends Component {
             <div>
                 <div className="d-flex justify-content-between">
                     <h5 className="card-text d-flex justify-content-between text-muted">
-                        Team Member #{++index}: {member.first_name} {member.last_name} <a
-                        href={"mailto:" + member.email}>{member.email}</a>
+                        Team Member #{++index}: {member.first_name} {member.last_name}
                     </h5>
                     {this.state.isCreator &&
                         this.displayDeleteButton(member.id)
